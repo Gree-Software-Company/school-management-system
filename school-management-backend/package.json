@@ -1,0 +1,32 @@
+{
+  "name": "school-management",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "up": "nodemon src/index.ts",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "4.21.2",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/express": "5.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "22.10.2",
+    "jest": "^29.7.0",
+    "prisma": "5.22.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.7.2"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+}
