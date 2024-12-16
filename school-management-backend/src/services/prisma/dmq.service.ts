@@ -1,5 +1,4 @@
-import { PrismaClient, Prisma } from "@prisma/client";
-
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function createUser(
@@ -22,17 +21,15 @@ export async function createUser(
   }
 }
 
-export async function findUserByEmail(email:string) {
+export async function findUserByEmail(email: string) {
   try {
-      const data = await prisma.admin.findUnique({
-        where: {
-          email:email
-        }
-      })
-      return data
+    const data = await prisma.admin.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    return data;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
-  
 }
-
