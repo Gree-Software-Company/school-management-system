@@ -19,7 +19,7 @@ app.use("/auth", authRouter);
 // Health Check Route
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3400;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
