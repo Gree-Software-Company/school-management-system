@@ -51,12 +51,13 @@ export class AuthController {
         sameSite: "strict",
         maxAge: 3600000,
       });
-
+      const userWithoutPassword = { ...user, password: undefined };
       return res.json({
         message: "User logged in successfully",
+        data: userWithoutPassword,
       });
     } catch (err) {
-      console.error("Error during login:", err); 
+      console.error("Error during login:", err);
       return res.status(500).json({
         message: "There was an error logging in",
       });

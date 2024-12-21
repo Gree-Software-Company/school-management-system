@@ -7,14 +7,14 @@ import { useAuthStore } from "@/store/auth-store";
 // Mutation to login
 export const useLogin = () => {
   const { toast } = useToast();
-  const setIsAuthenticated = useAuthStore((state) => state.setIsAuthenticated);
+  const { login } = useAuthStore();
   const navigate = useNavigate();
   return useMutation(
     (data: { email: string; password: string }) =>
       loginApi(data.email, data.password),
     {
-      onSuccess: () => {
-        setIsAuthenticated(true);
+      onSuccess: (data) => {
+        login(data?.data);
         toast({
           title: "Login successful",
           description: "You have successfully logged in",

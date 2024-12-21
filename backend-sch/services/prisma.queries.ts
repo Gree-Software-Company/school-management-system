@@ -13,6 +13,11 @@ export async function findAdmin(email: string) {
       where: {
         email: email,
       },
+      select: {
+        name: true,
+        email: true,
+        password: true,
+      },
     });
     return admin; // Return null if not found
   } catch (error) {
