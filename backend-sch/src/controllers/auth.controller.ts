@@ -51,7 +51,11 @@ export class AuthController {
         sameSite: "strict",
         maxAge: 3600000,
       });
-      const userWithoutPassword = { ...user, password: undefined };
+      const userWithoutPassword = {
+        ...user,
+        password: undefined,
+        token: token,
+      };
       return res.json({
         message: "User logged in successfully",
         data: userWithoutPassword,
