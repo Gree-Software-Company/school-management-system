@@ -1,8 +1,11 @@
+import RootNavbar from "@/components/shared/root-navbar";
 import { Link } from "react-router-dom";
+import { LivaLogo } from "@/assets/images";
 
 export default function NotFound() {
   return (
-    <div className="bg-white py-6 sm:py-8 lg:py-12">
+    <section className="py-6 sm:py-8 lg:py-7 px-8 space-y-4">
+      <RootNavbar Logo={LivaLogo} />
       <div className="mx-auto max-w-screen-lg px-4 md:px-8">
         <div className="grid gap-8 sm:grid-cols-2">
           <div className="flex flex-col items-center justify-center sm:items-start md:py-24 lg:py-32">
@@ -35,6 +38,6 @@ export default function NotFound() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

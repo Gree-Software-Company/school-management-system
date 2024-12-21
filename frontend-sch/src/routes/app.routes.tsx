@@ -89,8 +89,8 @@ const rootRoutes = createBrowserRouter(
             return { Component: AdminDashboard };
           }}
         />
+        // Staff Layout // Students Layout
       </Route>
-      // Staff Layout // Students Layout
     </>
   )
 );
