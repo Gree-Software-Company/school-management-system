@@ -5,6 +5,7 @@ import {
   Route,
   createRoutesFromElements,
 } from "react-router-dom";
+import { ProtectedRoute } from "./protected.routes";
 
 const rootRoutes = createBrowserRouter(
   createRoutesFromElements(
@@ -78,18 +79,20 @@ const rootRoutes = createBrowserRouter(
         />
       </Route>
       // Admin Layout
-      <Route path="/admin" element={<AdminLayout />}>
-        {/* Dashboard */}
-        <Route
-          index
-          lazy={async () => {
-            const { default: AdminDashboard } = await import(
-              "@/features/admin/pages/dashboard/index.tsx"
-            );
-            return { Component: AdminDashboard };
-          }}
-        />
-        // Staff Layout // Students Layout
+      <Route element={<ProtectedRoute />}>
+        <Route path="/admin" element={<AdminLayout />}>
+          {/* Dashboard */}
+          <Route
+            index
+            lazy={async () => {
+              const { default: AdminDashboard } = await import(
+                "@/features/admin/pages/dashboard/index.tsx"
+              );
+              return { Component: AdminDashboard };
+            }}
+          />
+          // Staff Layout // Students Layout
+        </Route>
       </Route>
     </>
   )

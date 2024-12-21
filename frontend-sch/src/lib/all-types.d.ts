@@ -7,10 +7,19 @@ interface LoginAdmin {
   phone: string;
 }
 
-type LoginAdminUI = Omit<LoginAdmin, "role" | "phone" | "gender" | "name">;
+type AuthStore = {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (value: boolean) => void;
+  logout: () => void;
+};
+
+type LoginUser = Omit<LoginAdmin, "role" | "phone" | "gender" | "name">;
 type Errors = {
-  data: {
-    type?: string;
-    message?: string;
+  response: {
+    data: {
+      type?: string;
+      message?: string;
+      error?: string;
+    };
   };
 };

@@ -1,4 +1,4 @@
-import RootNavbar from "@/components/shared/root-navbar";
+import RootNavbar from "@/components/shared/navbar/root-navbar";
 import { Link } from "react-router-dom";
 import { LivaLogo } from "@/assets/images";
 
