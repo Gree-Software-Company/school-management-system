@@ -1,5 +1,5 @@
 interface User {
-  id: number;
+  id?: number;
   email: string;
   password: string;
   name: string;
@@ -11,8 +11,8 @@ interface User {
 type AuthStore = {
   user: Pick<User, "email" | "id" | "name"> | null;
   isAuthenticated: boolean;
-  login: (user: User) => void;
-  setIsAuthenticated: (value: boolean) => void;
+  token: string | null;
+  login: (email: string, name: string, token: string) => void;
   logout: () => void;
 };
 

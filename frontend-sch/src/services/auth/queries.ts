@@ -14,7 +14,8 @@ export const useLogin = () => {
       loginApi(data.email, data.password),
     {
       onSuccess: (data) => {
-        login(data?.data);
+        const { email, name, token } = data.data;
+        login(email, name, token);
         toast({
           title: "Login successful",
           description: "You have successfully logged in",
