@@ -1,6 +1,11 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import React, { useMemo } from "react";
-
 
 export const Breadcrumbs = () => {
   const pathname = window.location.pathname;
@@ -24,11 +29,11 @@ export const Breadcrumbs = () => {
           <React.Fragment key={item.href}>
             <BreadcrumbItem className={index === 0 ? "hidden md:block" : ""}>
               {index === breadcrumbItems.length - 1 ? (
-                <span className="font-semibold text-gray-900">{item.name}</span>
+                <span className="font-semibold">{item.name}</span>
               ) : (
                 <BreadcrumbLink
                   href={item.href}
-                  className="hover:text-gray-700"
+                  className="hover:text-primary-foreground"
                 >
                   {item.name}
                 </BreadcrumbLink>

@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/store/auth-store";
 import { Link } from "react-router-dom";
-import { data } from "./data";
 import { LivaLogo } from "@/assets/images";
+import { data } from "./data";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuthStore();
@@ -40,6 +40,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        {/* Would change based on user role */}
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>

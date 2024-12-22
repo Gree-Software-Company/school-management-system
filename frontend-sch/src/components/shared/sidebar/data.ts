@@ -1,66 +1,43 @@
-import { BookOpen, Bot, Settings2, SquareTerminal } from "lucide-react";
+import { Bot, Settings2, SquareTerminal } from "lucide-react";
 
 export const data = {
   navMain: [
     {
-      title: "Playground",
+      title: "Home",
       url: "#",
       icon: SquareTerminal,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Dashboard",
+          url: "/admin",
         },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
+        // {
+        //   title: "",
+        //   url: "#",
+        // },
+        // {
+        //   title: "Settings",
+        //   url: "#",
+        // },
       ],
     },
     {
-      title: "Models",
+      title: "Administration",
       url: "#",
       icon: Bot,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Users",
+          url: "/admin/users",
         },
         {
-          title: "Explorer",
-          url: "#",
+          title: "Staff",
+          url: "/admin/staff",
         },
         {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Students",
+          url: "/admin/students",
         },
       ],
     },
@@ -71,20 +48,20 @@ export const data = {
       items: [
         {
           title: "General",
-          url: "#",
+          url: "/admin/settings",
         },
         {
-          title: "Team",
-          url: "#",
+          title: "Profile",
+          url: "/admin/profile",
         },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
+        // {
+        //   title: "Billing",
+        //   url: "#",
+        // },
+        // {
+        //   title: "Limits",
+        //   url: "#",
+        // },
       ],
     },
   ],
