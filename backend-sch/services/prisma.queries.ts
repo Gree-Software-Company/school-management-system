@@ -48,3 +48,42 @@ export async function createAdmin(email: string, password: string) {
     );
   }
 }
+
+/**
+ * Creates a teaching staff.
+ * @param {string} email - The email of the new admin.
+ * @returns {Promise<any>} - The created admin object.
+ */
+
+export async function createNewTeacherByEmail(email: string) {
+  try {
+    const data = await prisma.teachingStaff.create({
+      data: {
+        email: email,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("could not create new teaching staff ");
+  }
+}
+
+/**
+ *
+ * @param {number} id
+ * @returns {Promise<any>}
+ */
+export async function getTeacherById(id: number) {
+  try {
+    const data = await prisma.teachingStaff.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error)
+    throw new Error("could not create new teaching staff ");
+  }
+}

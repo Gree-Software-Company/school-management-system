@@ -8,8 +8,63 @@ datasource db {
 }
 
 model Admin {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
+  id       Int    @id @default(autoincrement())
+  email    String @unique
   password String
+}
 
+model TeachingStaff {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  profile   Profile?  @relation(fields: [profileId], references: [id])
+  profileId Int?       @unique
+  classes   Class[]   @relation("TeachingStaffClasses")
+  subjects Subject[]  
+}
+
+model Subject {
+  id Int  @id @default(autoincrement())
+  name String @unique
+  dateAdded DateTime @default(now())
+  teacherId Int @unique
+  teacher TeachingStaff  @relation(fields: [teacherId], references: [id])
+}
+
+model NoneTeachingStaff {
+  id        Int      @id @default(autoincrement())
+  role      String
+  firstName String
+  lastName  String
+  email     String    @unique
+  profile   Profile?  @relation(fields: [profileId], references: [id])
+  profileId Int?       @unique
+}
+
+model Class {
+  id          Int             @id @default(autoincrement())
+  name        String
+  teacher     TeachingStaff?  @relation("TeachingStaffClasses", fields: [teacherId], references: [id])
+  teacherId   Int?
+  students    Student[]       
+}
+
+model Student {
+  id          Int       @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String    @unique
+  profile     Profile?  @relation(fields: [profileId], references: [id])
+  profileId   Int?       @unique
+  classId   Int @unique 
+  class    Class  @relation(fields: [classId], references: [id])
+}
+
+model Profile {
+  id              Int               @id @default(autoincrement())
+  imageUrl        String?
+  degree          String?
+  profileImage    String
+  TeachingStaff   TeachingStaff?
+  NoneTeachingStaff NoneTeachingStaff?
+  Student         Student?
 }

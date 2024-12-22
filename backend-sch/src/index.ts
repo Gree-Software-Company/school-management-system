@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { authRouter } from "./routers/auth.router";
+import { staffRouter } from "./routers/staff.router";
 
 dotenv.config();
 
@@ -15,7 +16,7 @@ app.use(cookieParser()); // Corrected: Call cookieParser as a function
 
 // Routes
 app.use("/auth", authRouter);
-
+app.use("/staff", staffRouter)
 // Health Check Route
 
 // Start the server
