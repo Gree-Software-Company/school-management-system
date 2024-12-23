@@ -8,4 +8,4 @@ classRouter.get("/", ClassController.getAllClassPresent);
 classRouter.post("/", ClassController.createNewClass);
 classRouter.get("/:id", ClassController.viewClassDetails);
 classRouter.delete("/:id", ClassController.removeAClass);
-classRouter.put("/:id/assign", ClassController.setClassTeacher)
+classRouter.put("/:id/assign", ClassController.setClassTeacher);
