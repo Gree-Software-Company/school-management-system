@@ -128,6 +128,29 @@ export async function getTeacherById(id: number) {
   }
 }
 
+/**
+ *
+ * @param {number} id
+ * @returns {Promise<any>}
+ */
+export async function updateTeacherById(
+  id: number,
+  updateData: Partial<{ email: string; firstName: string; lastName: string }>
+) {
+  try {
+    const data = await prisma.teachingStaff.update({
+      where: {
+        id: id,
+      },
+      data: updateData,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("could not update teaching staff ");
+  }
+}
+
 /** 
   @param {number} id
   @param  {staffBioDataI} bioData 
