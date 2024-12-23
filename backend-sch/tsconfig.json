@@ -6,5 +6,10 @@
     "lib": ["esnext"],
     "esModuleInterop": true,
     "noImplicitAny": false
+  },
+  "exclude": ["./coverage", "./dist", "tests", "jest.config.js"],
+  "ts-node": {
+    "transpileOnly": true,
+    "files": true
   }
 }
