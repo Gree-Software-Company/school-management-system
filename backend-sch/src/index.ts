@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import { authRouter } from "./routers/auth.router";
 import { staffRouter } from "./routers/staff.router";
 import { subjectRouter } from "./routers/subject.router";
+import { ClassController } from "./controllers/class.controller";
+import { classRouter } from "./routers/class.router";
 
 dotenv.config();
 
@@ -19,7 +21,7 @@ app.use(cookieParser());
 app.use("/auth", authRouter);
 app.use("/staff", staffRouter)
 app.use('/subjects', subjectRouter)
-
+app.use('/class', classRouter)
 
 
 

@@ -224,3 +224,96 @@ export async function getAllSubjects() {
     throw new Error("could not update subject name ");
   }
 }
+
+/**
+ * @param {string} className
+ * @returns {Promise<any>}
+ */
+
+export async function addANewClass(className: string) {
+  try {
+    const data = await prisma.class.create({
+      data: {
+        name: className,
+      },
+    });
+
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could not create a new class");
+  }
+}
+
+/**
+ * @returns {Promise<any>}
+ */
+
+export async function getAllClasses() {
+  try {
+    const data = await prisma.class.findMany();
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("there was an error viewing all of the classes");
+  }
+}
+
+export async function removeClassById(id: number) {
+  try {
+    const data = prisma.class.delete({
+      where: {
+        id: id,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("the was an error deleting the class ");
+  }
+}
+
+/**
+ * @param {number} id
+ * @returns {Promise<any>}
+ */
+
+export async function getClassById(id: number) {
+  try {
+    const data = await prisma.class.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("there was an error view the class ");
+  }
+}
+
+/**
+ * @param {number} id
+ *
+ * @returns {Promise<any>}
+ */
+
+export async function updateClassTeacherById(
+  classId: number,
+  teacherId: number
+) {
+  try {
+    const data = await prisma.class.update({
+      where: {
+        id: classId,
+      },
+      data: {
+        teacherId: teacherId,
+      },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could not ansign the teacher to this class");
+  }
+}
