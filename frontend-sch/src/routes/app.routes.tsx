@@ -253,6 +253,54 @@ const rootRoutes = createBrowserRouter(
               }}
             />
           </Route>
+          {/* Class */}
+          <Route
+            path="class"
+            lazy={async () => {
+              const { default: ClassLayout } = await import(
+                "@/features/admin/pages/class/index.tsx"
+              );
+              return { Component: ClassLayout };
+            }}
+          >
+            <Route
+              index
+              lazy={async () => {
+                const { default: Class } = await import(
+                  "@/features/admin/pages/class/classes"
+                );
+                return { Component: Class };
+              }}
+            />
+            <Route
+              path="create"
+              lazy={async () => {
+                const { default: CreateClass } = await import(
+                  "@/features/admin/pages/class/add/create-class"
+                );
+                return { Component: CreateClass };
+              }}
+            />
+
+            <Route
+              path=":id"
+              lazy={async () => {
+                const { default: ViewClass } = await import(
+                  "@/features/admin/pages/class/view/view-class"
+                );
+                return { Component: ViewClass };
+              }}
+            />
+            <Route
+              path=":id/edit"
+              lazy={async () => {
+                const { default: EditClass } = await import(
+                  "@/features/admin/pages/class/edit/edit-class"
+                );
+                return { Component: EditClass };
+              }}
+            />
+          </Route>
           {/* Not Found */}
           <Route
             path="*"

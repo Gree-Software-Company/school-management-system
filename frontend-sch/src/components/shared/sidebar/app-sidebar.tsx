@@ -14,7 +14,7 @@ import {
 import { useAuthStore } from "@/store/auth-store";
 import { Link } from "react-router-dom";
 import { LivaLogo } from "@/assets/images";
-import { data } from "./data";
+import { data } from "../../../features/admin/pages/data";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useAuthStore();

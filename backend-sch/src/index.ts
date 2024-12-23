@@ -23,7 +23,7 @@ app.use("/staff", staffRouter);
 app.use("/subjects", subjectRouter);
 // app.use("/class", classRouter);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3400;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
