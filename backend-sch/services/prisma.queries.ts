@@ -28,6 +28,30 @@ export async function findAdmin(email: string) {
 }
 
 /**
+ * Updates an admin's details.
+ * @param {string} email - The email of the admin to update.
+ * @param {Partial<{ name: string; password: string }>} updateData - The data to update.
+ * @returns {Promise<Admin>} - The updated admin object.
+ */
+export async function updateAdmin(
+  email: string,
+  updateData: Partial<{ email: string; name: string; password: string }>
+) {
+  try {
+    const updatedAdmin = await prisma.admin.update({
+      where: {
+        email: email,
+      },
+      data: updateData,
+    });
+    return updatedAdmin;
+  } catch (error) {
+    console.error("Error updating admin:", error); // Log the error for debugging
+    throw new Error("Could not update admin");
+  }
+}
+
+/**
  * Creates a new admin user.
  * @param {string} email - The email of the new admin.
  * @param {string} password - The password of the new admin.
