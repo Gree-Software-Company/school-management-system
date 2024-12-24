@@ -16,6 +16,16 @@ type AuthStore = {
   logout: () => void;
 };
 
+type Classes = {
+  id: number;
+  name: string;
+  // teacher: string;
+  // subject: string;
+  // students: string;
+  // schedule: string;
+  // status: string;
+};
+
 type ActiveUser = Pick<User, "email" | "id"> | null;
 type LoginUser = Omit<User, "role" | "phone" | "gender" | "name" | "id">;
 type Errors = {
