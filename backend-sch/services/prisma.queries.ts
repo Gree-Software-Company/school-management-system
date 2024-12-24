@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { staffBioDataI } from "../src/interfaces/staff.interface";
+import { updateClassI } from "../src/types/class.interface";
 
 const prisma = new PrismaClient();
 
@@ -230,11 +231,12 @@ export async function getAllSubjects() {
  * @returns {Promise<any>}
  */
 
-export async function addANewClass(className: string) {
+export async function addANewClass(className: string, teacherId: number) {
   try {
     const data = await prisma.class.create({
       data: {
         name: className,
+        teacherId: teacherId,
       },
     });
 
@@ -284,6 +286,9 @@ export async function getClassById(id: number) {
       where: {
         id: id,
       },
+      include: {
+        teacher: true,
+      },
     });
     return data;
   } catch (err) {
@@ -315,5 +320,25 @@ export async function updateClassTeacherById(
   } catch (err) {
     console.log(err);
     throw new Error("could not ansign the teacher to this class");
+  }
+}
+
+/**
+ * @param {number} id
+ * @returns {Promise<any>}
+ */
+
+export async function updateClass(id: number, data: updateClassI) {
+  try {
+    const response = await prisma.class.update({
+      where: {
+        id: id,
+      },
+      data: data,
+    });
+    return response
+  } catch (err) {
+    console.log(err);
+    throw new Error("clould not update class fields");
   }
 }
