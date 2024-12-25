@@ -95,4 +95,8 @@ export class StaffController {
       return res.json({ message: "could not delete the user", details: error });
     }
   }
+
+  static async getStaffTeacherClass(req:Request, res:Response) {
+    
+  }
 }

@@ -4,11 +4,13 @@ import {
   getAllClasses,
   getClassById,
   removeClassById,
+  updateClass,
   updateClassTeacherById,
 } from "../../services/prisma.queries";
 
 type modifyRequestFields = {
   name: string;
+  id: string;
 };
 
 export class ClassController {
@@ -31,7 +33,8 @@ export class ClassController {
   ) {
     try {
       const name = req.body.name;
-      const data = await addANewClass(name);
+      const teacherId = parseInt(req.body.id);
+      const data = await addANewClass(name, teacherId);
       return res.json({ message: "clased added succesfully", details: data });
     } catch (err) {
       res.json({
@@ -81,8 +84,18 @@ export class ClassController {
         details: data,
       });
     } catch (error) {
-        console.log(error)
+      console.log(error);
+    }
+  }
 
+  static async updateClassById(req: Request, res: Response) {
+    try {
+      const { name, teacherId } = req.body;
+      const id = parseInt(req.params.id);
+      const data = await updateClass(id, { name, teacherId });
+      return res.json({ message: "class updated succesfully", details: data });
+    } catch (error) {
+      return res.json({ message: "could not update class", details: error });
     }
   }
 }
