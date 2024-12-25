@@ -42,7 +42,7 @@ export class SemesterController {
       const id = parseInt(req.params.id);
       const data = await getSemesterById(id);
       return res.json({
-        message: "semester deleted sucessfulyy",
+        // message: "semester ",
         details: data,
       });
     } catch (error) {

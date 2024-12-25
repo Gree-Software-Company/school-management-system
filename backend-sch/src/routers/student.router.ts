@@ -8,4 +8,4 @@ studnetRouter.post("/", StudentController.addStudent);
 studnetRouter.get("/:id", StudentController.getStudent);
 studnetRouter.put("/:id/pay", StudentController.payStudentFees);
 studnetRouter.delete("/:id", StudentController.deleteStudent);
-studnetRouter.put("/:id", StudentController.updateStudent)
+studnetRouter.put("/:id", StudentController.updateStudent);

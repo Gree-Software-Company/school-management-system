@@ -201,7 +201,11 @@ export async function deleteUserById(id: number) {
 
 export async function getAllStaff() {
   try {
-    const data = await prisma.teachingStaff.findMany();
+    const data = await prisma.teachingStaff.findMany({
+      include: {
+        classes: true,
+      },
+    });
     return data;
   } catch (error) {
     console.log(error);
@@ -412,11 +416,6 @@ export async function createNewStudent(studentdata: createStudentI) {
         lastName: studentdata.lastName,
         gender: studentdata.gender,
         classId: studentdata.classId,
-        fees: {
-          create: [
-            { amount: studentdata.amount, semesterId: studentdata.semesterId },
-          ],
-        },
       },
     });
     return newStudent;
@@ -429,7 +428,7 @@ export async function updateStudentById(id: number, studentData: any) {
   try {
     const data = await prisma.student.update({
       where: {
-        id: id,
+        id: parseInt(id.toString()),
       },
       data: studentData,
     });

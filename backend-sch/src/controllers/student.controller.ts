@@ -11,14 +11,12 @@ import {
 export class StudentController {
   public static async addStudent(req: Request, res: Response | any) {
     try {
-      const { firstName, lastName, classId, gender, amount, semesterId } =
-        req.body;
+      const { firstName, lastName, classId, gender, semesterId } = req.body;
       const data = await createNewStudent({
         firstName,
         lastName,
         classId,
         gender,
-        amount,
         semesterId,
       });
       return res.json({
@@ -70,13 +68,20 @@ export class StudentController {
     }
   }
   public static async updateStudent(
-    req: Request<{ id: any }, {}, { data: any }>,
+    req: Request<{ id: any }, {}>,
     res: Response | any
   ) {
     try {
       const id = req.params.id;
-      const { data } = req.body;
-      const resp = await updateStudentById(id, data);
+      const { firstName, lastName, classId, gender, semesterId } = req.body;
+      const updatedFields = {
+        firstName,
+        lastName,
+        classId,
+        gender,
+        semesterId,
+      };
+      const resp = await updateStudentById(id, updatedFields);
       res.json({ message: "user details updated", details: resp }).staus(201);
     } catch (error) {
       res.json({ message: "could not update user data", details: error });

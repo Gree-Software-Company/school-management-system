@@ -3,6 +3,6 @@ interface createStudentI {
   lastName: string; // Student's last name
   classId: number; // Unique identifier for the class
   gender: string;
-  amount: number;
+  amount?: number;
   semesterId: number;
 }
