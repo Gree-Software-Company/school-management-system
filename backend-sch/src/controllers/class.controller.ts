@@ -11,6 +11,7 @@ import {
 type modifyRequestFields = {
   name: string;
   id: string;
+  teacherId?: string;
 };
 
 export class ClassController {
@@ -33,7 +34,7 @@ export class ClassController {
   ) {
     try {
       const name = req.body.name;
-      const teacherId = parseInt(req.body.id);
+      const teacherId = parseInt(req.body?.teacherId || "0");
       const data = await addANewClass(name, teacherId);
       return res.json({ message: "clased added succesfully", details: data });
     } catch (err) {
