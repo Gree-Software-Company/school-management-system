@@ -95,6 +95,8 @@ export async function createNewTeacherByEmail(
     const data = await prisma.teachingStaff.create({
       data: {
         email: email,
+        firstName: firstName,
+        lastName: lastName,
         profile: {
           create: {
             firstName: firstName,
@@ -199,7 +201,11 @@ export async function deleteUserById(id: number) {
 
 export async function getAllStaff() {
   try {
-    const data = await prisma.teachingStaff.findMany();
+    const data = await prisma.teachingStaff.findMany({
+      include: {
+        profile: true,
+      },
+    });
     return data;
   } catch (error) {
     console.log(error);
@@ -305,7 +311,11 @@ export async function addANewClass(className: string, teacherId: number) {
 
 export async function getAllClasses() {
   try {
-    const data = await prisma.class.findMany();
+    const data = await prisma.class.findMany({
+      include: {
+        teacher: true,
+      },
+    });
     return data;
   } catch (err) {
     console.log(err);
@@ -388,7 +398,7 @@ export async function updateClass(id: number, data: updateClassI) {
       },
       data: data,
     });
-    return response
+    return response;
   } catch (err) {
     console.log(err);
     throw new Error("clould not update class fields");

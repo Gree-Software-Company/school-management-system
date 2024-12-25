@@ -19,7 +19,10 @@ type AuthStore = {
 type Classes = {
   id: number;
   name: string;
-  // teacher: string;
+  teacherId: string;
+  teacher: {
+    email: string;
+  };
   // subject: string;
   // students: string;
   // schedule: string;
