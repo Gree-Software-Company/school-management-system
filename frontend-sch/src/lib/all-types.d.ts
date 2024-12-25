@@ -20,6 +20,12 @@ type AuthStore = {
   logout: () => void;
 };
 
+interface Semester {
+  id: number;
+  name: string;
+  academicYear: string;
+}
+
 interface Staff {
   id: number;
   email: string;
@@ -28,10 +34,12 @@ interface Staff {
   profileId: number;
   phoneNumber: string;
   classId: number;
-  class: {
-    id: number;
-    name: string;
-  };
+  classes: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
   profile: {
     id: number;
     imageUrl: string;
@@ -39,6 +47,33 @@ interface Staff {
     lastName: string;
     qulifications: string; // This should be an array
   };
+}
+
+interface Student {
+  id: number;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  classId: number;
+  amount: number;
+  class: {
+    id: number;
+    name: string;
+  };
+  dateJoined: Date;
+  marks: {
+    id: number;
+    score: number;
+    subjectId: number;
+    semesterId: number;
+    addedDate: Date;
+  };
+  fees: {
+    id: number;
+    amount: number;
+    subjectId: number;
+    semesterId: number;
+  }[];
 }
 
 type Class = {
@@ -66,7 +101,14 @@ type LoginUser = Omit<User, "role" | "phone" | "gender" | "name" | "id">;
  * @description Teaching Staff Types
  */
 type TeacherStaff = Pick<Staff, Partial<Staff, "id">, "firstName", "lastName">;
-type StaffTable = Pick<Staff, "id", "firstName", "lastName", "email">;
+type StaffTable = Pick<
+  Staff,
+  "id",
+  "firstName",
+  "lastName",
+  "email",
+  "classes"
+>;
 type StaffColumns = {
   onDelete: (teacherId: number) => void;
 };
@@ -75,6 +117,22 @@ type CreateStaffForm = Pick<
   "email" | "firstName" | "lastName" | "phoneNumber"
 >;
 type UpdateStaffForm = Pick<Staff, "id"> & Partial<Staff>;
+
+/**
+ * @description Student Types
+ */
+type StudentTable = Pick<
+  Student,
+  "id" | "firstName" | "lastName" | "gender" | "class" | "dateJoined"
+>;
+type StudentColumns = {
+  onDelete: (studentId: number) => void;
+};
+type CreateStudentForm = Pick<
+  Student,
+  "firstName" | "lastName" | "gender" | "classId"
+>;
+type UpdateStudentForm = Pick<Student, "id"> & Partial<Student>;
 
 /**
  * @description Class Types

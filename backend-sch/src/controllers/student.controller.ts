@@ -42,7 +42,7 @@ export class StudentController {
     try {
       const id = parseInt(req.params.id);
       const data = getStudentById(id);
-      return res.json({ data: data });
+      return res.json({ student: data });
     } catch (err) {
       return res
         .json({ message: "could not get the specified student" })
@@ -53,7 +53,7 @@ export class StudentController {
     try {
       const data = await findAllStudents();
 
-      return res.json({ data: data }).status(200);
+      return res.json({ students: data }).status(200);
     } catch (error) {
       return res.json({
         message: "could not find all the students ",
@@ -88,16 +88,23 @@ export class StudentController {
         semesterId,
       };
       const resp = await updateStudentById(id, updatedFields);
-      res.json({ message: "user details updated", details: resp }).staus(201);
+      res
+        .json({ message: "student details updated", details: resp })
+        .status(201);
     } catch (error) {
-      res.json({ message: "could not update user data", details: error });
+      res
+        .json({ message: "could not update user data", details: error })
+        .status(500);
     }
   }
   public static async deleteStudent(req: Request, res: Response | any) {
     try {
       const id = parseInt(req.params.id);
       const data = await removeStudentById(id);
-      return res.json({ message: "user deleted successully", details: data });
+      return res.json({
+        message: "student deleted successully",
+        details: data,
+      });
     } catch (err) {
       return res.json({ message: "could not delete the user" }).status(500);
     }

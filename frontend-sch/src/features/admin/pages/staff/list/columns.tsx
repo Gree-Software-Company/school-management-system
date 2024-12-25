@@ -44,10 +44,20 @@ export const columns = ({
     accessorKey: "email",
     header: "Email",
   },
-  //   {
-  //     accessorKey: "class.name",
-  //     header: "Class",
-  //   },
+  {
+    accessorKey: "classes[0]?.name",
+    header: "Class",
+    cell: ({ row }) => {
+      const classData = row.original;
+      return (
+        <p>
+          {!classData?.classes || classData?.classes.length === 0
+            ? "N/A"
+            : classData?.classes[0]?.name}
+        </p>
+      );
+    },
+  },
   //   {
   //     accessorKey: "phoneNumber",
   //     header: "Phone",
