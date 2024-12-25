@@ -416,6 +416,12 @@ export async function createNewStudent(studentdata: createStudentI) {
         lastName: studentdata.lastName,
         gender: studentdata.gender,
         classId: studentdata.classId,
+        fees: {
+          create: {
+            amount: studentdata.amount,
+            semesterId: studentdata.semesterId,
+          },
+        },
       },
     });
     return newStudent;
@@ -508,7 +514,11 @@ export async function removeStudentById(id: number) {
 
 export async function findAllStudents() {
   try {
-    const data = await prisma.student.findMany();
+    const data = await prisma.student.findMany({
+      include: {
+        class: true,
+      },
+    });
     return data;
   } catch (err) {
     console.log(err);

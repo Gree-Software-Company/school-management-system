@@ -56,7 +56,7 @@ model Student {
   firstName  String
   lastName   String
   gender     String
-  classId    Int             @unique
+  classId    Int             
   class      Class           @relation(fields: [classId], references: [id])
   marks      Marks[]
   profile    StudentProfile?

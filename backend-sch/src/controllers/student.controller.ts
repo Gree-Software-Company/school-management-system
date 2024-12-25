@@ -7,26 +7,32 @@ import {
   removeStudentById,
   updateStudentById,
 } from "../../services/prisma.queries";
+import { scrypt } from "node:crypto";
 
 export class StudentController {
   public static async addStudent(req: Request, res: Response | any) {
     try {
-      const { firstName, lastName, classId, gender, semesterId } = req.body;
+      const { firstName, lastName, classId, gender, semesterId, amount } =
+        req.body;
       const data = await createNewStudent({
         firstName,
         lastName,
         classId,
         gender,
         semesterId,
+        amount,
       });
-      return res.json({
-        message: "student created sucessfully",
-        details: data,
-      });
+
+      return res
+        .json({
+          message: "student created successfully",
+          details: data,
+        })
+        .status(201);
     } catch (err) {
       return res
         .json({
-          message: "could not  create sucessfully",
+          message: "could not create sucessfully",
           details: err,
         })
         .status(500);
