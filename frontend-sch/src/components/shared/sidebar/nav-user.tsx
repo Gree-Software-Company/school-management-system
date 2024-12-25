@@ -77,7 +77,7 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <BadgeCheck />
-                <Link to="/admin/settings/profile">Account</Link>
+                <Link to="/admin/settings/account">Account</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
