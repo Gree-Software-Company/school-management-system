@@ -1,4 +1,4 @@
 export interface updateClassI {
-    teacherId?:number;
-    name?:string
+  teacherId?: string;
+  name?: string;
 }

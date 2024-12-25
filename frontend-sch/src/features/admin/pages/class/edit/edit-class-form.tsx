@@ -22,20 +22,43 @@ import {
 import { ButtonLoader } from "@/components/shared/loaders/button-loader";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   className: z.string(),
   teacher: z.string(),
 });
 
-export default function EditClassForm({ classData }: { classData: Class }) {
+export default function EditClassForm({
+  classData,
+}: {
+  classData: {
+    id: number;
+    name: string;
+    teacher: {
+      id?: string;
+      firstName: string;
+      lastName: string;
+    };
+  };
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      className: classData?.name,
-      teacher: classData?.teacher?.id,
+      className: "",
+      teacher: "",
     },
   });
+
+  useEffect(() => {
+    if (classData) {
+      form.reset({
+        className: classData.name,
+        teacher: classData.teacher.id,
+      });
+    }
+  }, [classData, form]);
+
   const { data: teacherData, isLoading: isTeachersLoading } =
     useFetchTeachers();
   const { mutateAsync: updateClass, isLoading: updatingClassLoader } =
@@ -56,7 +79,7 @@ export default function EditClassForm({ classData }: { classData: Class }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="className"
@@ -78,21 +101,47 @@ export default function EditClassForm({ classData }: { classData: Class }) {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Teacher</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={field.value?.toString()}
+              >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Teacher" />
+                    <SelectValue
+                      placeholder={
+                        !classData
+                          ? "Select Teacher"
+                          : `${classData?.teacher?.firstName} ${classData?.teacher?.lastName}`
+                      }
+                    >
+                      {field.value
+                        ? `${
+                            teacherData?.find(
+                              (t: TeacherStaff) =>
+                                t.id.toString() === field.value
+                            )?.firstName || ""
+                          } ${
+                            teacherData?.find(
+                              (t: TeacherStaff) =>
+                                t.id.toString() === field.value
+                            )?.lastName || ""
+                          }`
+                        : "Select Teacher"}
+                    </SelectValue>
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   {isTeachersLoading ? (
-                    <div className="flex items-center justify-center p-2">
+                    <span>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Loading...
-                    </div>
+                    </span>
                   ) : (
                     teacherData?.map((teacher: TeacherStaff) => (
-                      <SelectItem key={teacher.id} value={teacher.id}>
+                      <SelectItem
+                        key={teacher.id}
+                        value={teacher.id?.toString()}
+                      >
                         {teacher.firstName} {teacher.lastName}
                       </SelectItem>
                     ))

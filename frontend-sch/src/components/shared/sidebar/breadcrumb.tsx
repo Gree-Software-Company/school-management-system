@@ -6,9 +6,10 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import React, { useMemo } from "react";
+import { useLocation } from "react-router-dom";
 
 export const Breadcrumbs = () => {
-  const pathname = window.location.pathname;
+  const { pathname } = useLocation();
 
   // Generate breadcrumb items based on the current path
   const breadcrumbItems = useMemo(() => {

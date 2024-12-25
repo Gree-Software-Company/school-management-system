@@ -42,7 +42,7 @@ export const useFetchAStaff = (teacherId: number) => {
     async () => {
       try {
         const response = await apiClient.get(`/staff/${teacherId}`);
-        return response.data?.staff;
+        return response.data?.data;
       } catch (error) {
         console.log("Error fetching teaching staff", error);
       }

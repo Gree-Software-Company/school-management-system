@@ -396,7 +396,10 @@ export async function updateClass(id: number, data: updateClassI) {
       where: {
         id: id,
       },
-      data: data,
+      data: {
+        name: data.name,
+        teacherId: parseInt(data?.teacherId || "0"),
+      },
     });
     return response;
   } catch (err) {
