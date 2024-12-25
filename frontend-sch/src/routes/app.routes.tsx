@@ -113,12 +113,21 @@ const rootRoutes = createBrowserRouter(
             />
             {/* Profile */}
             <Route
-              path="profile"
+              path="account"
               lazy={async () => {
                 const { default: Account } = await import(
                   "@/features/admin/pages/settings/account"
                 );
                 return { Component: Account };
+              }}
+            />
+            <Route
+              path="profile"
+              lazy={async () => {
+                const { default: Profile } = await import(
+                  "@/features/admin/pages/settings/profile"
+                );
+                return { Component: Profile };
               }}
             />
             {/* Canteen */}

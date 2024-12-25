@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { AppWindow, Settings, User } from "lucide-react";
+import { AppWindow, Settings, User, UserCog } from "lucide-react";
 import { SettingsSidebar } from "../../components/sidebar/settings-sidebar";
 
 const settingsPages = [
@@ -12,6 +12,11 @@ const settingsPages = [
     title: "Profile",
     href: "/admin/settings/profile",
     icon: User,
+  },
+  {
+    title: "Account",
+    href: "/admin/settings/account",
+    icon: UserCog,
   },
   {
     title: "Appearance",

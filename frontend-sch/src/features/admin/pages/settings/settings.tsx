@@ -5,14 +5,20 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { AppWindow, User } from "lucide-react";
+import { AppWindow, User, UserCog } from "lucide-react";
 
 const settingsItems = [
   {
     title: "Profile",
-    description: "Manage your personal information and account settings",
+    description: "Manage your personal information settings",
     href: "/admin/settings/profile",
     icon: User,
+  },
+  {
+    title: "Account",
+    description: "Manage your account settings",
+    href: "/admin/settings/account",
+    icon: UserCog,
   },
   {
     title: "Appearance",
