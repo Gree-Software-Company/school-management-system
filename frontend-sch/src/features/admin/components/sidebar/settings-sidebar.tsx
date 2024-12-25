@@ -32,12 +32,12 @@ export function SettingsSidebar({
             </p>
           </div>
           <Separator className="mx-3" />
-          <div className="flex flex-1 flex-col gap-1 px-3">
+          <nav className="flex flex-col gap-y-2">
             {items.map((item) => (
               <NavLink
                 key={item.href}
                 to={item.href}
-                end={item.href === ""} // Use `end` for the root route
+                end={item.href === "/admin/settings"} // Only exact match for the overview route
                 className={({ isActive }) =>
                   cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
@@ -53,7 +53,7 @@ export function SettingsSidebar({
                 {item.title}
               </NavLink>
             ))}
-          </div>
+          </nav>
         </div>
       </ScrollArea>
     </nav>
