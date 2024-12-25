@@ -23,7 +23,7 @@ export default function Header({
         <h3 className="text-3xl font-bold">{title}</h3>
         <p className="text-base">{description}</p>
       </div>
-      <Button onClick={() => navigate(buttonInfo.link)}>
+      <Button onClick={() => navigate(buttonInfo.link, { replace: true })}>
         {buttonInfo.title}
       </Button>
     </div>

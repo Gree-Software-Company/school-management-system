@@ -26,6 +26,12 @@ interface Staff {
   firstName: string;
   lastName: string;
   profileId: number;
+  phoneNumber: string;
+  classId: number;
+  class: {
+    id: number;
+    name: string;
+  };
   profile: {
     id: number;
     imageUrl: string;
@@ -40,6 +46,7 @@ type Class = {
   name: string;
   teacherId: string;
   teacher: {
+    id: string;
     firstName: string;
     lastName: string;
   };
@@ -59,6 +66,15 @@ type LoginUser = Omit<User, "role" | "phone" | "gender" | "name" | "id">;
  * @description Teaching Staff Types
  */
 type TeacherStaff = Pick<Staff, Partial<Staff, "id">, "firstName", "lastName">;
+type StaffTable = Pick<Staff, "id", "firstName", "lastName", "email">;
+type StaffColumns = {
+  onDelete: (teacherId: number) => void;
+};
+type CreateStaffForm = Pick<
+  Staff,
+  "email" | "firstName" | "lastName" | "phoneNumber"
+>;
+type UpdateStaffForm = Pick<Staff, "id"> & Partial<Staff>;
 
 /**
  * @description Class Types

@@ -48,7 +48,7 @@ export const useFetchAClass = (classId: number) => {
     async () => {
       try {
         const response = await apiClient.get(`/class/${classId}`);
-        return response.data;
+        return response.data?.data;
       } catch (error) {
         console.log("Error fetching class", error);
       }

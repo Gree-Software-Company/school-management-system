@@ -74,7 +74,9 @@ const ActionMenu = ({
         )}
         {hasEdit && (
           <DropdownMenuItem>
-            <Link to={`${id}/edit`}>Edit {resourceName}</Link>
+            <Link to={`${id}/edit`} replace>
+              Edit {resourceName}
+            </Link>
           </DropdownMenuItem>
         )}
         {hasDelete && (
