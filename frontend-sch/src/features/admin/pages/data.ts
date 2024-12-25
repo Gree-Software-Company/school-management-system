@@ -54,10 +54,6 @@ export const data = {
           title: "General",
           url: "/admin/settings",
         },
-        {
-          title: "Profile",
-          url: "/admin/profile",
-        },
         // {
         //   title: "Billing",
         //   url: "#",

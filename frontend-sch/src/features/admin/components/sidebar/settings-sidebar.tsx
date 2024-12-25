@@ -18,13 +18,10 @@ export function SettingsSidebar({
 }: SidebarNavProps) {
   return (
     <nav
-      className={cn(
-        "hidden border-r bg-background md:block w-[240px]",
-        className
-      )}
+      className={cn("hidden bg-background md:block w-[240px]", className)}
       {...props}
     >
-      <ScrollArea className="h-full">
+      <ScrollArea>
         <div className="flex flex-col gap-4 p-0">
           <div className="px-3 py-1">
             <h2 className="mb-2 text-lg font-semibold tracking-tight">
@@ -40,7 +37,7 @@ export function SettingsSidebar({
               <NavLink
                 key={item.href}
                 to={item.href}
-                end={item.href === "/settings"} // Use `end` for the root route
+                end={item.href === ""} // Use `end` for the root route
                 className={({ isActive }) =>
                   cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
