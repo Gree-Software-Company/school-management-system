@@ -96,22 +96,43 @@ const rootRoutes = createBrowserRouter(
           <Route
             path="settings"
             lazy={async () => {
-              const { default: Settings } = await import(
-                "@/features/admin/pages/settings/settings"
+              const { default: SettingsLayout } = await import(
+                "@/features/admin/pages/settings"
               );
-              return { Component: Settings };
+              return { Component: SettingsLayout };
             }}
-          />
-          {/* Profile */}
-          <Route
-            path="profile"
-            lazy={async () => {
-              const { default: Account } = await import(
-                "@/features/admin/pages/settings/account"
-              );
-              return { Component: Account };
-            }}
-          />
+          >
+            <Route
+              index
+              lazy={async () => {
+                const { default: Settings } = await import(
+                  "@/features/admin/pages/settings/settings"
+                );
+                return { Component: Settings };
+              }}
+            />
+            {/* Profile */}
+            <Route
+              path="profile"
+              lazy={async () => {
+                const { default: Account } = await import(
+                  "@/features/admin/pages/settings/account"
+                );
+                return { Component: Account };
+              }}
+            />
+            {/* Canteen */}
+            <Route
+              path="appearance"
+              lazy={async () => {
+                const { default: Appearance } = await import(
+                  "@/features/admin/pages/settings/appearance"
+                );
+                return { Component: Appearance };
+              }}
+            />
+          </Route>
+
           {/* Users */}
           <Route
             path="users"
