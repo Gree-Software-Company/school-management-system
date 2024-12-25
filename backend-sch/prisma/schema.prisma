@@ -20,81 +20,95 @@ model TeachingStaff {
   profile   Profile?  @relation(fields: [profileId], references: [id])
   profileId Int?      @unique
   classes   Class[]   @relation("TeachingStaffClasses")
-  subjects Subject[]  
+  subjects  Subject[]
 }
 
 model Subject {
-  id Int                @id @default(autoincrement())
-  name String           @unique
-  dateAdded DateTime    @default(now())
-  teacherId Int?         @unique
-  teacher TeachingStaff? @relation(fields: [teacherId], references: [id])
-  marks   Marks[]
+  id        Int            @id @default(autoincrement())
+  name      String         @unique
+  dateAdded DateTime       @default(now())
+  teacherId Int?           @unique
+  teacher   TeachingStaff? @relation(fields: [teacherId], references: [id])
+  marks     Marks[]
 }
 
 model NoneTeachingStaff {
   id        Int      @id @default(autoincrement())
   role      String
-  email     String    @unique
-  profile   Profile?  @relation(fields: [profileId], references: [id])
-  profileId Int?      @unique
+  email     String   @unique
+  profile   Profile? @relation(fields: [profileId], references: [id])
+  profileId Int?     @unique
 }
 
 model Class {
-  id          Int             @id @default(autoincrement())
-  name        String
-  teacher     TeachingStaff?  @relation("TeachingStaffClasses", fields: [teacherId], references: [id])
-  teacherId   Int?
-  students    Student[]       
+  id        Int            @id @default(autoincrement())
+  name      String
+  teacher   TeachingStaff? @relation("TeachingStaffClasses", fields: [teacherId], references: [id])
+  teacherId Int?
+  students  Student[]
 }
 
 model Student {
-  id          Int       @id @default(autoincrement())
-  firstName   String
-  lastName    String
-  classId     Int       @unique 
-  class       Class     @relation(fields: [classId], references: [id])
-  marks       Marks[]
-  profile     StudentProfile?
-  dateJoined  DateTime @default(now())
+  id         Int             @id @default(autoincrement())
+  firstName  String
+  lastName   String
+  gender     String
+  classId    Int             @unique
+  class      Class           @relation(fields: [classId], references: [id])
+  marks      Marks[]
+  profile    StudentProfile?
+  dateJoined DateTime        @default(now())
+  fees   Fees[]
 }
 
 model StudentProfile {
-  id  Int @id @default(autoincrement())
-  fatherName String
-  motherName String
-  parentContact String
+  id               Int      @id @default(autoincrement())
+  fatherName       String
+  motherName       String
+  parentContact    String
   parentAltContact String?
-  dateOfBirth   DateTime
-  imageUrl String?
-  studentId   Int @unique
-  student Student @relation(fields: [studentId], references: [id])
+  dateOfBirth      DateTime
+  imageUrl         String?
+  studentId        Int      @unique
+  student          Student  @relation(fields: [studentId], references: [id])
 }
 
 model Profile {
-  id              Int               @id @default(autoincrement())
-  imageUrl        String?
-  firstName       String
-  lastName        String
-  qulifications   String?
-  TeachingStaff   TeachingStaff?
+  id                Int                @id @default(autoincrement())
+  imageUrl          String?
+  firstName         String
+  lastName          String
+  qulifications     String?
+  TeachingStaff     TeachingStaff?
   NoneTeachingStaff NoneTeachingStaff?
-
 }
 
 model Marks {
-  id Int @id @default(autoincrement())
-  semester Int
-  score    Float
+  id        Int      @id @default(autoincrement())
+  score     Float
   studentId Int
-  subjectId  Int
+  subjectId Int
+  semesterId Int
   addedDate DateTime @default(now())
-  student Student @relation(fields: [studentId], references: [id])
-  subject Subject @relation(fields: [subjectId], references: [id])
+  student   Student  @relation(fields: [studentId], references: [id])
+  subject   Subject  @relation(fields: [subjectId], references: [id])
+  semester Semester @relation(fields: [semesterId], references: [id])
+  
 }
 
 model Fees {
-  id Int @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
+  amount        Float
+  studentId     Int
+  semesterId    Int
+  student       Student @relation(fields: [studentId], references: [id])
+  semester      Semester @relation(fields: [semesterId], references: [id])
+}
+
+model Semester {
+  id           Int    @id @default(autoincrement())
+  name         String
   academicYear String
-  amount Float
+  marks   Marks[]
+  fees    Fees[]
 }

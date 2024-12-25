@@ -79,7 +79,5 @@ export class StaffController {
     }
   }
 
-  static async getStaffTeacherClass(req:Request, res:Response) {
-    
-  }
+ 
 }
