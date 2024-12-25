@@ -201,11 +201,7 @@ export async function deleteUserById(id: number) {
 
 export async function getAllStaff() {
   try {
-    const data = await prisma.teachingStaff.findMany({
-      include: {
-        profile: true,
-      },
-    });
+    const data = await prisma.teachingStaff.findMany();
     return data;
   } catch (error) {
     console.log(error);
@@ -405,5 +401,215 @@ export async function updateClass(id: number, data: updateClassI) {
   } catch (err) {
     console.log(err);
     throw new Error("clould not update class fields");
+  }
+}
+
+export async function createNewStudent(studentdata: createStudentI) {
+  try {
+    const newStudent = await prisma.student.create({
+      data: {
+        firstName: studentdata.firstName,
+        lastName: studentdata.lastName,
+        gender: studentdata.gender,
+        classId: studentdata.classId,
+        fees: {
+          create: [
+            { amount: studentdata.amount, semesterId: studentdata.semesterId },
+          ],
+        },
+      },
+    });
+    return newStudent;
+  } catch (error) {
+    console.error("Error creating student:", error);
+  }
+}
+
+export async function updateStudentById(id: number, studentData: any) {
+  try {
+    const data = await prisma.student.update({
+      where: {
+        id: id,
+      },
+      data: studentData,
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could not update the specified studnet");
+  }
+}
+
+export async function addNewFees(
+  studentId: number,
+  amount: number,
+  semesterId: number
+) {
+  try {
+    const resp = await prisma.fees.create({
+      data: {
+        amount: amount,
+        studentId: studentId,
+        semesterId: semesterId,
+      },
+    });
+    return resp;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could not create new fees");
+  }
+}
+
+export async function updateFeeById(id: number, feeData: any) {
+  try {
+    const data = await prisma.fees.update({
+      where: {
+        id: id,
+      },
+      data: feeData,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("could not update user fees");
+  }
+}
+
+export async function getStudentById(id: number) {
+  try {
+    const data = await prisma.student.findFirst({
+      where: {
+        id: id,
+      },
+      include: {
+        class: true,
+        fees: true,
+      },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could not get student");
+  }
+}
+
+export async function removeStudentById(id: number) {
+  try {
+    const data = await prisma.student.delete({
+      where: {
+        id: id,
+      },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could notremove student");
+  }
+}
+
+export async function findAllStudents() {
+  try {
+    const data = await prisma.student.findMany();
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could not get student");
+  }
+}
+
+/**
+ *
+ * @param {string} name
+ * @param {string} academicYear
+ * @returns {Promise<any>}
+ */
+
+export async function createNewSemester(name: string, academicYear: string) {
+  try {
+    const res = await prisma.semester.create({
+      data: {
+        name: name,
+        academicYear: academicYear,
+      },
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could not create a new semester ");
+  }
+}
+
+export async function getSemesterById(id: number) {
+  try {
+    const data = await prisma.semester.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("cloud not get a specified semester");
+  }
+}
+
+/**
+ *
+ * @param {number} id
+ * @param {number}  semData
+ * @returns {Promise<any>}
+ */
+export async function updateSemesterById(id: number, semData: any) {
+  try {
+    const data = await prisma.semester.update({
+      where: {
+        id: id,
+      },
+      data: semData,
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("cloud not get a specified semester");
+  }
+}
+
+/**
+ *
+ * @param {number} id
+ * @param {number}  semData
+ * @returns {Promise<any>}
+ */
+export async function deleteSemesterById(id: number) {
+  try {
+    const data = await prisma.semester.delete({
+      where: {
+        id: id,
+      },
+    });
+    return data;
+  } catch (err) {
+    console.log(err);
+    throw new Error("cloud not get a specified semester");
+  }
+}
+
+export async function findAllSemestersPresent() {
+  try {
+    const data = await prisma.semester.findMany();
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("could not get all semesters");
+  }
+}
+
+export async function getAllFeesPaid() {
+  try {
+    const res = await prisma.fees.findMany();
+    return res;
+  } catch (err) {
+    console.log(err);
+    throw new Error("could not not list all the fees");
   }
 }
