@@ -154,7 +154,7 @@ export default function CreateStudentForm() {
                 </FormControl>
                 <SelectContent>
                   {loadingSemesters ? (
-                    <span>
+                    <span className="flex space-x-3">
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Loading...
                     </span>
@@ -200,7 +200,7 @@ export default function CreateStudentForm() {
                 </FormControl>
                 <SelectContent>
                   {loadingClassList ? (
-                    <span>
+                    <span className="flex space-x-3">
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Loading...
                     </span>

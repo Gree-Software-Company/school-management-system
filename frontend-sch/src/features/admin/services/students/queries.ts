@@ -37,7 +37,7 @@ export const useFetchStudents = () => {
 /**
  * @Query Fetch a single student by ID
  */
-export const useFetchAStudent = (studentId: string) => {
+export const useFetchAStudent = (studentId: number) => {
   const { toast } = useToast();
   return useQuery(
     ["student", studentId],

@@ -494,7 +494,7 @@ export async function getStudentById(id: number) {
     return data;
   } catch (err) {
     console.log(err);
-    throw new Error("could not get student");
+    throw new Error("could not find student");
   }
 }
 

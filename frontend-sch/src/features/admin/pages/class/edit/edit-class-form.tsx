@@ -132,7 +132,7 @@ export default function EditClassForm({
                 </FormControl>
                 <SelectContent>
                   {isTeachersLoading ? (
-                    <span>
+                    <span className="flex space-x-3">
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                       Loading...
                     </span>

@@ -41,7 +41,7 @@ export class StudentController {
   public static async getStudent(req: Request, res: Response | any) {
     try {
       const id = parseInt(req.params.id);
-      const data = getStudentById(id);
+      const data = await getStudentById(id);
       return res.json({ student: data });
     } catch (err) {
       return res
