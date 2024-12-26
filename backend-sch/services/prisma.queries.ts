@@ -276,7 +276,11 @@ export async function updateSujectName(subjectName: string, id: number) {
  */
 export async function getAllSubjects() {
   try {
-    const response = await prisma.subject.findMany();
+    const response = await prisma.subject.findMany({
+      include: {
+        teacher: true,
+      },
+    });
     return response;
   } catch (error) {
     console.log(error);

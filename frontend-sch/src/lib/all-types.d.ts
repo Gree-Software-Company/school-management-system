@@ -49,6 +49,12 @@ interface Staff {
   };
 }
 
+interface Subjects {
+  id: number;
+  name: string;
+  teacher: TeacherStaff;
+}
+
 interface Student {
   id: number;
   firstName: string;
@@ -117,6 +123,16 @@ type CreateStaffForm = Pick<
   "email" | "firstName" | "lastName" | "phoneNumber"
 >;
 type UpdateStaffForm = Pick<Staff, "id"> & Partial<Staff>;
+
+/**
+ * @description Subject Types
+ */
+type SubjectTable = Pick<Subjects, "id" | "name" | "teacher">;
+type SubjectColumns = {
+  onDelete: (subjectId: number) => void;
+};
+type CreateSubjectForm = Pick<Subjects, "name" | Partial<Subjects, "teacher">>;
+type UpdateSubjectForm = Pick<Subjects, "id"> & Partial<Subjects>;
 
 /**
  * @description Student Types

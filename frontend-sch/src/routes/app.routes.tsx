@@ -236,6 +236,53 @@ const rootRoutes = createBrowserRouter(
               }}
             />
           </Route>
+          {/* Subjects */}
+          <Route
+            path="subjects"
+            lazy={async () => {
+              const { default: SubjectsLayout } = await import(
+                "@/features/admin/pages/subjects/index.tsx"
+              );
+              return { Component: SubjectsLayout };
+            }}
+          >
+            <Route
+              index
+              lazy={async () => {
+                const { default: Subjects } = await import(
+                  "@/features/admin/pages/subjects/subjects"
+                );
+                return { Component: Subjects };
+              }}
+            />
+            <Route
+              path="create"
+              lazy={async () => {
+                const { default: CreateSubject } = await import(
+                  "@/features/admin/pages/subjects/add/create-subject"
+                );
+                return { Component: CreateSubject };
+              }}
+            />
+            <Route
+              path=":id"
+              lazy={async () => {
+                const { default: ViewSubject } = await import(
+                  "@/features/admin/pages/subjects/view/view-subject"
+                );
+                return { Component: ViewSubject };
+              }}
+            />
+            <Route
+              path=":id/edit"
+              lazy={async () => {
+                const { default: EditSubject } = await import(
+                  "@/features/admin/pages/subjects/edit/edit-subject"
+                );
+                return { Component: EditSubject };
+              }}
+            />
+          </Route>
           {/* Students */}
           <Route
             path="students"
