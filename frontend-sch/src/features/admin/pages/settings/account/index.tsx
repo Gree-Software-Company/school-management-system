@@ -1,3 +1,4 @@
+import { ButtonLoader } from "@/components/shared/loaders/button-loader";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,7 +18,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  useFetchUserEmail,
+  useUpdateEmail,
+} from "@/features/admin/services/users/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -48,13 +55,14 @@ type AccountFormValues = z.infer<typeof accountFormSchema>;
 type PasswordFormValues = z.infer<typeof passwordFormSchema>;
 
 export default function AccountPage() {
+  const { data: userEmail, isLoading: loadingEmail } = useFetchUserEmail();
+
   const emailForm = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues: {
       email: "",
     },
   });
-
   const passwordForm = useForm<PasswordFormValues>({
     resolver: zodResolver(passwordFormSchema),
     defaultValues: {
@@ -64,8 +72,23 @@ export default function AccountPage() {
     },
   });
 
-  function onEmailSubmit(data: AccountFormValues) {
-    console.log("Email update:", data);
+  const { mutateAsync: updateUserEmail, isLoading: updatingUserEmail } =
+    useUpdateEmail();
+
+  useEffect(() => {
+    if (userEmail) {
+      emailForm.reset({
+        email: userEmail,
+      });
+    }
+  }, [userEmail, emailForm]);
+
+  async function onEmailSubmit(data: AccountFormValues) {
+    try {
+      await updateUserEmail(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function onPasswordSubmit(data: PasswordFormValues) {
@@ -84,10 +107,7 @@ export default function AccountPage() {
       <Card>
         <CardHeader>
           <CardTitle>Email Address</CardTitle>
-          <CardDescription>
-            Change your email address. You'll need to verify any new email
-            address.
-          </CardDescription>
+          <CardDescription>Change your email address.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...emailForm}>
@@ -102,11 +122,15 @@ export default function AccountPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="john.doe@example.com"
-                        type="email"
-                        {...field}
-                      />
+                      {loadingEmail ? (
+                        <Skeleton className="bg-muted w-full h-10" />
+                      ) : (
+                        <Input
+                          placeholder="user@example.com"
+                          type="email"
+                          {...field}
+                        />
+                      )}
                     </FormControl>
                     <FormDescription>
                       This is the email associated with your account.
@@ -115,7 +139,9 @@ export default function AccountPage() {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Update email</Button>
+              <ButtonLoader type="submit" isLoading={updatingUserEmail}>
+                Update email
+              </ButtonLoader>
             </form>
           </Form>
         </CardContent>
@@ -144,6 +170,7 @@ export default function AccountPage() {
                     <FormControl>
                       <Input
                         placeholder="••••••••"
+                        disabled
                         type="password"
                         {...field}
                       />

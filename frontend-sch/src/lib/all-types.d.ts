@@ -102,6 +102,7 @@ type Class = {
  */
 type ActiveUser = Pick<User, "email" | "id"> | null;
 type LoginUser = Omit<User, "role" | "phone" | "gender" | "name" | "id">;
+type UpdateUserEmail = Partial<User>;
 
 /**
  * @description Teaching Staff Types

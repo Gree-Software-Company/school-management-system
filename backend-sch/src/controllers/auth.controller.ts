@@ -73,7 +73,7 @@ export class AuthController {
   }
 
   static async getUser(req: Request | any, res: Response | any) {
-    const token = req.cookies.token;
+    const { token } = req.query;
 
     if (!token) {
       return res.status(401).json({ message: "No token provided" });
@@ -106,7 +106,7 @@ export class AuthController {
 
   static async updateUser(req: Request | any, res: Response | any) {
     const { email, password, name } = req.body;
-    const token = req.cookies.token;
+    const token = req.query.token;
 
     if (!token) {
       return res.status(401).json({ message: "No token provided" });
