@@ -36,7 +36,7 @@ export const useFetchUserEmail = () => {
 export const useUpdateEmail = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { token } = useAuthStore();
+  const { token, login, user } = useAuthStore();
   return useMutation(
     async (data: UpdateUserEmail) => {
       try {
@@ -47,8 +47,16 @@ export const useUpdateEmail = () => {
       }
     },
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
         queryClient.invalidateQueries(["user-email"]);
+        if (user) {
+          const updatedUser = {
+            ...user,
+            email: data?.data.email,
+            name: data?.data.name,
+          };
+          login(updatedUser.email, updatedUser.name, token as string);
+        }
         toast({
           title: "Email Updated",
           description: "The email was updated successfully.",

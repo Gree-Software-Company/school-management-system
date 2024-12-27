@@ -18,13 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
-import {
-  useFetchUserEmail,
-  useUpdateEmail,
-} from "@/features/admin/services/users/queries";
+import { useUpdateEmail } from "@/features/admin/services/users/queries";
+import { useAuthStore } from "@/store/auth-store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -55,12 +51,11 @@ type AccountFormValues = z.infer<typeof accountFormSchema>;
 type PasswordFormValues = z.infer<typeof passwordFormSchema>;
 
 export default function AccountPage() {
-  const { data: userEmail, isLoading: loadingEmail } = useFetchUserEmail();
-
+  const { user } = useAuthStore();
   const emailForm = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
     defaultValues: {
-      email: "",
+      email: user?.email || "",
     },
   });
   const passwordForm = useForm<PasswordFormValues>({
@@ -74,14 +69,6 @@ export default function AccountPage() {
 
   const { mutateAsync: updateUserEmail, isLoading: updatingUserEmail } =
     useUpdateEmail();
-
-  useEffect(() => {
-    if (userEmail) {
-      emailForm.reset({
-        email: userEmail,
-      });
-    }
-  }, [userEmail, emailForm]);
 
   async function onEmailSubmit(data: AccountFormValues) {
     try {
@@ -122,15 +109,11 @@ export default function AccountPage() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      {loadingEmail ? (
-                        <Skeleton className="bg-muted w-full h-10" />
-                      ) : (
-                        <Input
-                          placeholder="user@example.com"
-                          type="email"
-                          {...field}
-                        />
-                      )}
+                      <Input
+                        placeholder="user@example.com"
+                        type="email"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       This is the email associated with your account.
