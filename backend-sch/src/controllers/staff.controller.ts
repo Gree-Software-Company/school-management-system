@@ -4,6 +4,7 @@ import {
   getAllStaff,
   getTeacherById,
   updateStaffBIO,
+  updateTeacherById,
 } from "../../services/prisma.queries";
 import { staffBioDataI } from "../interfaces/staff.interface";
 
@@ -25,8 +26,9 @@ export class StaffController {
   static async getAllStaff(req: any, res: any) {
     try {
       const data = await getAllStaff();
-      res.json({ data: data }).status(201);
+      res.json({ staff: data }).status(201);
     } catch (err) {
+      console.log(err);
       res.json({ message: "there was an error get all staff" }).status(500);
     }
   }
@@ -44,7 +46,22 @@ export class StaffController {
         .status(500);
     }
   }
+  static async updateStaffById(req: any, res: any) {
+    const id = parseInt(req.params.id);
 
+    try {
+      const { email, firstName, lastName } = req.body;
+      const updateFields = { email, firstName, lastName };
+      const data = await updateTeacherById(id, updateFields);
+      res
+        .json({ message: "Staff updated sucessfully", data: data })
+        .status(201);
+    } catch (err) {
+      res
+        .json({ message: "there was an error creating a new teacher" })
+        .status(500);
+    }
+  }
   static async updateStaffProfile(req: any, res: any) {
     const id = parseInt(req.params.id);
     try {
@@ -78,6 +95,5 @@ export class StaffController {
       return res.json({ message: "could not delete the user", details: error });
     }
   }
-
- 
+  static async getStaffTeacherClass(req: Request, res: Response) {}
 }

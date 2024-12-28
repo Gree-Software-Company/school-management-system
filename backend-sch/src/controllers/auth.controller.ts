@@ -1,8 +1,12 @@
 const bcrypt = require("bcrypt");
 import { Request, Response } from "express";
-import { signData } from "../utils/jwt.util";
+import { decodeToken, signData } from "../utils/jwt.util";
 import { makeHash, verifyHash } from "../utils/hashing.util";
-import { createAdmin, findAdmin } from "../../services/prisma.queries";
+import {
+  createAdmin,
+  findAdmin,
+  updateAdmin,
+} from "../../services/prisma.queries";
 
 export class AuthController {
   static async register(req: Request | any, res: Response | any) {
@@ -51,14 +55,90 @@ export class AuthController {
         sameSite: "strict",
         maxAge: 3600000,
       });
-
+      const userWithoutPassword = {
+        ...user,
+        password: undefined,
+        token: token,
+      };
       return res.json({
         message: "User logged in successfully",
+        data: userWithoutPassword,
       });
     } catch (err) {
-      console.error("Error during login:", err); 
+      console.error("Error during login:", err);
       return res.status(500).json({
         message: "There was an error logging in",
+      });
+    }
+  }
+
+  static async getUser(req: Request | any, res: Response | any) {
+    const { token } = req.query;
+
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
+    try {
+      const decoded = decodeToken(token);
+      const user = await findAdmin(decoded.email);
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const userWithoutPassword = {
+        ...user,
+        password: undefined,
+      };
+
+      return res.json({
+        message: "User retrieved successfully",
+        data: userWithoutPassword,
+      });
+    } catch (err) {
+      console.error("Error retrieving user from token:", err);
+      return res.status(500).json({
+        message: "There was an error retrieving the user",
+      });
+    }
+  }
+
+  static async updateUser(req: Request | any, res: Response | any) {
+    const { email, password, name } = req.body;
+    const token = req.query.token;
+
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
+
+    try {
+      const decoded = decodeToken(token);
+      const existingAdmin = await findAdmin(decoded.email);
+
+      if (!existingAdmin) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Prepare updated fields
+      const updatedFields: any = { email, name };
+
+      // Hash password only if provided
+      if (password) {
+        updatedFields.password = await makeHash(password);
+      }
+
+      // Update the admin
+      const updatedAdmin = await updateAdmin(decoded.email, updatedFields);
+
+      return res.json({
+        message: "User updated successfully",
+        data: updatedAdmin,
+      });
+    } catch (err) {
+      console.error("Error updating user:", err);
+      return res.status(500).json({
+        message: "There was an error updating the user",
       });
     }
   }

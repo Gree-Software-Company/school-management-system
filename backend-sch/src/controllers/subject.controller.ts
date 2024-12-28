@@ -18,13 +18,16 @@ export class SubjectController {
   static async getAllSubjectsPresent(req: Request, res: Response) {
     try {
       const data = await getAllSubjects();
-      res.json({ data: data });
+      res.json({ subjects: data });
     } catch (err) {
       res.json({ message: "could not get subjects" }).status(500);
     }
   }
 
-  static async addNewSubject(req: Request<{},{}, ModifyRequestBody>, res: Response|any) {
+  static async addNewSubject(
+    req: Request<{}, {}, ModifyRequestBody>,
+    res: Response | any
+  ) {
     const { name } = req.body;
     try {
       const data = await createANewSubject(name);
@@ -55,7 +58,7 @@ export class SubjectController {
 
   static async modifySubject(
     req: Request<addNewRouteParams, {}, ModifyRequestBody>,
-    res: Response|any
+    res: Response | any
   ) {
     const id = parseInt(req.params.id);
     try {

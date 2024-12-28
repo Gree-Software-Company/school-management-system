@@ -11,12 +11,15 @@ model Admin {
   id       Int    @id @default(autoincrement())
   fees     Float?
   email    String @unique
+  name    String?
   password String
 }
 
 model TeachingStaff {
   id        Int       @id @default(autoincrement())
   email     String    @unique
+  firstName String?   
+  lastName  String?
   profile   Profile?  @relation(fields: [profileId], references: [id])
   profileId Int?      @unique
   classes   Class[]   @relation("TeachingStaffClasses")
@@ -53,7 +56,7 @@ model Student {
   firstName  String
   lastName   String
   gender     String
-  classId    Int             @unique
+  classId    Int             
   class      Class           @relation(fields: [classId], references: [id])
   marks      Marks[]
   profile    StudentProfile?

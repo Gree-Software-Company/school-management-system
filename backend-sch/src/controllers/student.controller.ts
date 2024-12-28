@@ -7,28 +7,32 @@ import {
   removeStudentById,
   updateStudentById,
 } from "../../services/prisma.queries";
+import { scrypt } from "node:crypto";
 
 export class StudentController {
   public static async addStudent(req: Request, res: Response | any) {
     try {
-      const { firstName, lastName, classId, gender, amount, semesterId } =
+      const { firstName, lastName, classId, gender, semesterId, amount } =
         req.body;
       const data = await createNewStudent({
         firstName,
         lastName,
         classId,
         gender,
-        amount,
         semesterId,
+        amount,
       });
-      return res.json({
-        message: "student created sucessfully",
-        details: data,
-      });
+
+      return res
+        .json({
+          message: "student created successfully",
+          details: data,
+        })
+        .status(201);
     } catch (err) {
       return res
         .json({
-          message: "could not  create sucessfully",
+          message: "could not create sucessfully",
           details: err,
         })
         .status(500);
@@ -37,8 +41,8 @@ export class StudentController {
   public static async getStudent(req: Request, res: Response | any) {
     try {
       const id = parseInt(req.params.id);
-      const data = getStudentById(id);
-      return res.json({ data: data });
+      const data = await getStudentById(id);
+      return res.json({ student: data });
     } catch (err) {
       return res
         .json({ message: "could not get the specified student" })
@@ -49,7 +53,7 @@ export class StudentController {
     try {
       const data = await findAllStudents();
 
-      return res.json({ data: data }).status(200);
+      return res.json({ students: data }).status(200);
     } catch (error) {
       return res.json({
         message: "could not find all the students ",
@@ -70,23 +74,37 @@ export class StudentController {
     }
   }
   public static async updateStudent(
-    req: Request<{ id: any }, {}, { data: any }>,
+    req: Request<{ id: any }, {}>,
     res: Response | any
   ) {
     try {
       const id = req.params.id;
-      const { data } = req.body;
-      const resp = await updateStudentById(id, data);
-      res.json({ message: "user details updated", details: resp }).staus(201);
+      const { firstName, lastName, classId, gender, semesterId } = req.body;
+      const updatedFields = {
+        firstName,
+        lastName,
+        classId,
+        gender,
+        semesterId,
+      };
+      const resp = await updateStudentById(id, updatedFields);
+      res
+        .json({ message: "student details updated", details: resp })
+        .status(201);
     } catch (error) {
-      res.json({ message: "could not update user data", details: error });
+      res
+        .json({ message: "could not update user data", details: error })
+        .status(500);
     }
   }
   public static async deleteStudent(req: Request, res: Response | any) {
     try {
       const id = parseInt(req.params.id);
       const data = await removeStudentById(id);
-      return res.json({ message: "user deleted successully", details: data });
+      return res.json({
+        message: "student deleted successully",
+        details: data,
+      });
     } catch (err) {
       return res.json({ message: "could not delete the user" }).status(500);
     }

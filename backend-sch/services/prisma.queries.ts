@@ -15,11 +15,40 @@ export async function findAdmin(email: string) {
       where: {
         email: email,
       },
+      select: {
+        name: true,
+        email: true,
+        password: true,
+      },
     });
     return admin; // Return null if not found
   } catch (error) {
     console.error("Error retrieving admin:", error); // Log the error for debugging
     throw new Error("Could not retrieve admin");
+  }
+}
+
+/**
+ * Updates an admin's details.
+ * @param {string} email - The email of the admin to update.
+ * @param {Partial<{ name: string; password: string }>} updateData - The data to update.
+ * @returns {Promise<Admin>} - The updated admin object.
+ */
+export async function updateAdmin(
+  email: string,
+  updateData: Partial<{ email: string; name: string; password: string }>
+) {
+  try {
+    const updatedAdmin = await prisma.admin.update({
+      where: {
+        email: email,
+      },
+      data: updateData,
+    });
+    return updatedAdmin;
+  } catch (error) {
+    console.error("Error updating admin:", error); // Log the error for debugging
+    throw new Error("Could not update admin");
   }
 }
 
@@ -66,6 +95,8 @@ export async function createNewTeacherByEmail(
     const data = await prisma.teachingStaff.create({
       data: {
         email: email,
+        firstName: firstName,
+        lastName: lastName,
         profile: {
           create: {
             firstName: firstName,
@@ -97,6 +128,29 @@ export async function getTeacherById(id: number) {
   } catch (error) {
     console.log(error);
     throw new Error("could not create new teaching staff ");
+  }
+}
+
+/**
+ *
+ * @param {number} id
+ * @returns {Promise<any>}
+ */
+export async function updateTeacherById(
+  id: number,
+  updateData: Partial<{ email: string; firstName: string; lastName: string }>
+) {
+  try {
+    const data = await prisma.teachingStaff.update({
+      where: {
+        id: id,
+      },
+      data: updateData,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("could not update teaching staff ");
   }
 }
 
@@ -222,7 +276,11 @@ export async function updateSujectName(subjectName: string, id: number) {
  */
 export async function getAllSubjects() {
   try {
-    const response = await prisma.subject.findMany();
+    const response = await prisma.subject.findMany({
+      include: {
+        teacher: true,
+      },
+    });
     return response;
   } catch (error) {
     console.log(error);
@@ -257,7 +315,11 @@ export async function addANewClass(className: string, teacherId: number) {
 
 export async function getAllClasses() {
   try {
-    const data = await prisma.class.findMany();
+    const data = await prisma.class.findMany({
+      include: {
+        teacher: true,
+      },
+    });
     return data;
   } catch (err) {
     console.log(err);
@@ -338,7 +400,10 @@ export async function updateClass(id: number, data: updateClassI) {
       where: {
         id: id,
       },
-      data: data,
+      data: {
+        name: data.name,
+        teacherId: parseInt(data?.teacherId || "0"),
+      },
     });
     return response;
   } catch (err) {
@@ -356,9 +421,10 @@ export async function createNewStudent(studentdata: createStudentI) {
         gender: studentdata.gender,
         classId: studentdata.classId,
         fees: {
-          create: [
-            { amount: studentdata.amount, semesterId: studentdata.semesterId },
-          ],
+          create: {
+            amount: studentdata.amount,
+            semesterId: studentdata.semesterId,
+          },
         },
       },
     });
@@ -372,7 +438,7 @@ export async function updateStudentById(id: number, studentData: any) {
   try {
     const data = await prisma.student.update({
       where: {
-        id: id,
+        id: parseInt(id.toString()),
       },
       data: studentData,
     });
@@ -432,7 +498,7 @@ export async function getStudentById(id: number) {
     return data;
   } catch (err) {
     console.log(err);
-    throw new Error("could not get student");
+    throw new Error("could not find student");
   }
 }
 
@@ -452,7 +518,11 @@ export async function removeStudentById(id: number) {
 
 export async function findAllStudents() {
   try {
-    const data = await prisma.student.findMany();
+    const data = await prisma.student.findMany({
+      include: {
+        class: true,
+      },
+    });
     return data;
   } catch (err) {
     console.log(err);

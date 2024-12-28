@@ -42,8 +42,8 @@ export class SemesterController {
       const id = parseInt(req.params.id);
       const data = await getSemesterById(id);
       return res.json({
-        message: "semester deleted sucessfulyy",
-        details: data,
+        // message: "semester ",
+        semester: data,
       });
     } catch (error) {
       return res.json({ message: "could not delete semester", details: error });
@@ -69,7 +69,7 @@ export class SemesterController {
   public static async getAllSemester(req: Request, res: Response) {
     try {
       const data = await findAllSemestersPresent();
-      res.json({ data: data });
+      res.json({ semesters: data });
     } catch (err) {
       res.json({ message: "could not fetch all semsesters", details: err });
     }
