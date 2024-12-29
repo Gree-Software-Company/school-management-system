@@ -23,22 +23,22 @@ export default function AdminDashboard() {
         <div className="grid auto-rows-min gap-4 md:grid-cols-3">
           <AnalyticsCard
             title="Total Students"
-            value={analyticsData.totalStudents}
+            value={analyticsData?.totalStudents}
             color="bg-blue-500"
           />
           <AnalyticsCard
             title="Total Staff"
-            value={analyticsData.totalStaff}
+            value={analyticsData?.totalStaff}
             color="bg-green-500"
           />
           <AnalyticsCard
             title="Total Classes"
-            value={analyticsData.totalClasses}
+            value={analyticsData?.totalClasses}
             color="bg-purple-500"
           />
           <StaffBreakdown
-            teachingStaff={analyticsData.teachingStaff}
-            nonTeachingStaff={analyticsData.nonTeachingStaff}
+            teachingStaff={analyticsData?.teachingStaff}
+            nonTeachingStaff={analyticsData?.nonTeachingStaff}
           />
         </div>
       )}
