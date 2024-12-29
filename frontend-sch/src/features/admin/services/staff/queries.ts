@@ -14,11 +14,11 @@ import { useNavigate } from "react-router-dom";
 export const useFetchTeachers = () => {
   const { toast } = useToast();
   return useQuery(
-    ["staff"],
+    ["teachers"],
     async () => {
       try {
-        const response = await apiClient.get("/staff");
-        return response.data?.staff;
+        const response = await apiClient.get("/staff/teachers");
+        return response.data?.teachers;
       } catch (error) {
         console.log("Error fetching teaching staff", error);
       }
@@ -35,13 +35,13 @@ export const useFetchTeachers = () => {
   );
 };
 
-export const useFetchAStaff = (teacherId: number) => {
+export const useFetchTeacher = (teacherId: number) => {
   const { toast } = useToast();
   return useQuery(
     ["teacher", teacherId],
     async () => {
       try {
-        const response = await apiClient.get(`/staff/${teacherId}`);
+        const response = await apiClient.get(`/staff/teachers/${teacherId}`);
         return response.data?.data;
       } catch (error) {
         console.log("Error fetching teaching staff", error);
@@ -62,14 +62,14 @@ export const useFetchAStaff = (teacherId: number) => {
 /**
  * @Mutation Create a new teacher
  */
-export const useCreateStaff = () => {
+export const useCreateTeacher = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { toast } = useToast();
   return useMutation(
-    async (data: CreateStaffForm) => {
+    async (data: CreateTeacherForm) => {
       try {
-        const response = await apiClient.post("/staff", data);
+        const response = await apiClient.post("/staff/teachers", data);
         return response.data?.staff;
       } catch (error) {
         console.log("Error creating teaching staff", error);
@@ -77,7 +77,7 @@ export const useCreateStaff = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["staff"]);
+        queryClient.invalidateQueries(["teachers"]);
         toast({
           title: "Teacher created successfully",
           description: "Teacher has been created successfully",
@@ -98,14 +98,17 @@ export const useCreateStaff = () => {
 /**
  * @Mutation Update a teacher
  */
-export const useUpdateStaff = () => {
+export const useUpdateTeacher = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { toast } = useToast();
   return useMutation(
     async (data: UpdateStaffForm) => {
       try {
-        const response = await apiClient.put(`/staff/${data.id}`, data);
+        const response = await apiClient.put(
+          `/staff/teachers/${data.id}`,
+          data
+        );
         return response.data?.staff;
       } catch (error) {
         console.log("Error updating teaching staff", error);
@@ -113,7 +116,8 @@ export const useUpdateStaff = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["staff"]);
+        queryClient.invalidateQueries(["teacher"]);
+        queryClient.invalidateQueries(["teachers"]);
         toast({
           title: "Teacher updated successfully",
           description: "Teacher has been updated successfully",
@@ -125,6 +129,133 @@ export const useUpdateStaff = () => {
         toast({
           title: "Error updating teaching staff",
           description: "An error occured while updating teaching staff",
+        });
+      },
+    }
+  );
+};
+
+/**
+ * @Query Fetch all staff members
+ */
+export const useFetchStaff = () => {
+  const { toast } = useToast();
+  return useQuery(
+    ["staffs"],
+    async () => {
+      try {
+        const response = await apiClient.get("/staff");
+        return response.data?.staff;
+      } catch (error) {
+        console.log("Error fetching staff", error);
+      }
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+        toast({
+          title: "Error fetching staff",
+          description: "An error occured while fetching staff",
+        });
+      },
+    }
+  );
+};
+
+/**
+ * @Query Fetch a staff member
+ */
+export const useFetchStaffMember = (staffId: number) => {
+  const { toast } = useToast();
+  return useQuery(
+    ["staff", staffId],
+    async () => {
+      try {
+        const response = await apiClient.get(`/staff/${staffId}`);
+        return response.data?.data;
+      } catch (error) {
+        console.log("Error fetching staff", error);
+      }
+    },
+    {
+      onError: (error) => {
+        console.log(error);
+        toast({
+          title: "Error fetching staff",
+          description: "An error occured while fetching staff",
+        });
+      },
+    }
+  );
+};
+
+/**
+ * @Mutation Update a staff member
+ */
+export const useUpdateStaff = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  return useMutation(
+    async (data: UpdateStaffForm) => {
+      try {
+        const response = await apiClient.put(`/staff/${data.id}`, data);
+        return response.data?.staff;
+      } catch (error) {
+        console.log("Error updating staff", error);
+      }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["staff"]);
+        queryClient.invalidateQueries(["staffs"]);
+        toast({
+          title: "Staff updated successfully",
+          description: "Staff has been updated successfully",
+        });
+        navigate("/admin/staff");
+      },
+      onError: (error) => {
+        console.log(error);
+        toast({
+          title: "Error updating staff",
+          description: "An error occured while updating staff",
+        });
+      },
+    }
+  );
+};
+
+/**
+ * @Mutation Create a new staff member
+ */
+export const useCreateStaff = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  return useMutation(
+    async (data: CreateStaffForm) => {
+      try {
+        const response = await apiClient.post("/staff", data);
+        return response.data?.staff;
+      } catch (error) {
+        console.log("Error creating staff", error);
+      }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["staffs"]);
+        toast({
+          title: "Staff created successfully",
+          description: "Staff has been created successfully",
+        });
+        navigate("/admin/staff");
+      },
+      onError: (error) => {
+        console.log(error);
+        toast({
+          title: "Error creating staff",
+          description: "An error occured while creating staff",
         });
       },
     }

@@ -199,6 +199,7 @@ const rootRoutes = createBrowserRouter(
               return { Component: StaffLayout };
             }}
           >
+            {/* Non-teaching routes */}
             <Route
               index
               lazy={async () => {
@@ -212,7 +213,7 @@ const rootRoutes = createBrowserRouter(
               path="create"
               lazy={async () => {
                 const { default: CreateStaff } = await import(
-                  "@/features/admin/pages/staff/add/create-staff"
+                  "@/features/admin/pages/staff/add/non-teaching/create-staff"
                 );
                 return { Component: CreateStaff };
               }}
@@ -230,9 +231,38 @@ const rootRoutes = createBrowserRouter(
               path=":id/edit"
               lazy={async () => {
                 const { default: EditStaff } = await import(
-                  "@/features/admin/pages/staff/edit/edit-staff"
+                  "@/features/admin/pages/staff/edit/non-teaching/edit-staff"
                 );
                 return { Component: EditStaff };
+              }}
+            />
+
+            {/* Teachers routes */}
+            <Route
+              path="teachers/create"
+              lazy={async () => {
+                const { default: CreateTeacher } = await import(
+                  "@/features/admin/pages/staff/add/teaching/create-teacher"
+                );
+                return { Component: CreateTeacher };
+              }}
+            />
+            <Route
+              path="teachers/:id"
+              lazy={async () => {
+                const { default: ViewStaff } = await import(
+                  "@/features/admin/pages/staff/view/view-staff"
+                );
+                return { Component: ViewStaff };
+              }}
+            />
+            <Route
+              path="teachers/:id/edit"
+              lazy={async () => {
+                const { default: EditTeacher } = await import(
+                  "@/features/admin/pages/staff/edit/teaching/edit-teacher"
+                );
+                return { Component: EditTeacher };
               }}
             />
           </Route>

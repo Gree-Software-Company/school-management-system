@@ -34,6 +34,7 @@ interface Staff {
   profileId: number;
   phoneNumber: string;
   classId: number;
+  role: string;
   classes: [
     {
       id: number;
@@ -97,6 +98,26 @@ type Class = {
   // status: string;
 };
 
+// Header props
+interface ButtonInfo {
+  title: string;
+  link: string;
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
+}
+
+interface HeaderProps {
+  title: string;
+  description: string;
+  className?: string;
+  buttons: ButtonInfo[];
+}
+
 /**
  * @description User Types
  */
@@ -114,17 +135,18 @@ type StaffTable = Pick<
   "firstName",
   "lastName",
   "email",
-  "classes"
+  "classes",
+  "role"
 >;
 type StaffColumns = {
   onDelete: (teacherId: number) => void;
 };
-type CreateStaffForm = Pick<
+type CreateTeacherForm = Pick<
   Staff,
   "email" | "firstName" | "lastName" | "phoneNumber"
 >;
+type CreateStaffForm = Pick<Staff, "email" | "role">;
 type UpdateStaffForm = Pick<Staff, "id"> & Partial<Staff>;
-
 /**
  * @description Subject Types
  */

@@ -1,5 +1,5 @@
 import { DataTable } from "@/components/ui/data-table";
-import { columns } from "./columns";
+import { staffColumns } from "./columns";
 
 export default function StaffTable({
   data,
@@ -10,7 +10,7 @@ export default function StaffTable({
 }) {
   return (
     <div className="p-5">
-      <DataTable columns={columns({ onDelete })} data={data} />
+      <DataTable columns={staffColumns({ onDelete })} data={data} />
     </div>
   );
 }

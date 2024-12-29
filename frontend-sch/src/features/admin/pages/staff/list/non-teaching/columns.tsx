@@ -3,7 +3,7 @@ import ActionMenu from "@/components/shared/table/action-menu";
 import { DataTableColumnHeader } from "@/components/shared/table/column-header";
 import { ColumnDef } from "@tanstack/react-table";
 
-export const columns = ({
+export const staffColumns = ({
   onDelete,
 }: {
   onDelete: (staffId: number) => void;
@@ -33,30 +33,12 @@ export const columns = ({
     ),
   },
   {
-    accessorKey: "firstName",
-    header: "First Name",
-  },
-  {
-    accessorKey: "lastName",
-    header: "Last Name",
+    accessorKey: "role",
+    header: "Role",
   },
   {
     accessorKey: "email",
     header: "Email",
-  },
-  {
-    accessorKey: "classes[0]?.name",
-    header: "Class",
-    cell: ({ row }) => {
-      const classData = row.original;
-      return (
-        <p>
-          {!classData?.classes || classData?.classes.length === 0
-            ? "N/A"
-            : classData?.classes[0]?.name}
-        </p>
-      );
-    },
   },
   //   {
   //     accessorKey: "phoneNumber",

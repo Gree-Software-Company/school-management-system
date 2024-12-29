@@ -6,26 +6,27 @@ export default function Header({
   title,
   description,
   className,
-  buttonInfo,
-}: {
-  title: string;
-  description: string;
-  className?: string;
-  buttonInfo: {
-    title: string;
-    link: string;
-  };
-}) {
+  buttons,
+}: HeaderProps) {
   const navigate = useNavigate();
+
   return (
     <div className={cn("flex items-center justify-between w-full", className)}>
       <div className="space-y-2">
         <h3 className="text-3xl font-bold">{title}</h3>
-        <p className="text-base">{description}</p>
+        <p className="text-base text-muted-foreground">{description}</p>
       </div>
-      <Button onClick={() => navigate(buttonInfo.link, { replace: true })}>
-        {buttonInfo.title}
-      </Button>
+      <div className="flex space-x-2">
+        {buttons.map((button, index) => (
+          <Button
+            key={index}
+            variant={button.variant || "default"}
+            onClick={() => navigate(button.link, { replace: true })}
+          >
+            {button.title}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 }

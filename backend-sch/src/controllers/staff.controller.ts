@@ -39,7 +39,7 @@ export class StaffController {
   static async getAllStaff(req: any, res: any) {
     try {
       const data = await getAllStaff();
-      res.json({ staff: data }).status(201);
+      res.json({ teachers: data }).status(201);
     } catch (err) {
       console.log(err);
       res.json({ message: "there was an error get all staff" }).status(500);
@@ -149,7 +149,7 @@ export class StaffController {
   static async getAllNonTeachingStaff(req, res, next) {
     try {
       const data = await getAllNonTeachingStaff();
-      return res.json({ data: data });
+      return res.json({ staff: data });
     } catch (err) {
       return next(new GetDataException());
     }

@@ -11,56 +11,33 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUpdateStaff } from "@/features/admin/services/staff/queries";
+import { useCreateTeacher } from "@/features/admin/services/staff/queries";
 import { ButtonLoader } from "@/components/shared/loaders/button-loader";
-import { useEffect } from "react";
 
 const formSchema = z.object({
-  email: z.string().email(),
-  firstName: z.string().min(1, "First name required"),
-  lastName: z.string().min(1, "Last name is required"),
-  phoneNumber: z.string().optional(),
+  email: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  phoneNumber: z.string(),
 });
 
-export default function EditStaffForm({
-  staffData,
-}: {
-  staffData: UpdateStaffForm | undefined;
-}) {
+export default function CreateTeacherForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-    },
   });
 
-  useEffect(() => {
-    if (staffData) {
-      form.reset({
-        email: staffData.email,
-        firstName: staffData.firstName,
-        lastName: staffData.lastName,
-        phoneNumber: staffData.phoneNumber || "",
-      });
-    }
-  }, [staffData, form]);
-  const { mutateAsync: updateStaff, isLoading: updatingStaffLoader } =
-    useUpdateStaff();
+  const { mutateAsync: createTeacher, isLoading: creatingStaffLoader } =
+    useCreateTeacher();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!staffData) return;
     const data = {
-      id: staffData?.id,
       email: values.email,
       firstName: values.firstName,
       lastName: values.lastName,
-      //   phoneNumber: values.phoneNumber,
+      phoneNumber: values.phoneNumber,
     };
     try {
-      await updateStaff(data);
+      await createTeacher(data);
     } catch (error) {
       console.error("Form submission error", error);
     }
@@ -132,8 +109,8 @@ export default function EditStaffForm({
             </FormItem>
           )}
         />
-        <ButtonLoader type="submit" isLoading={updatingStaffLoader}>
-          Update Staff
+        <ButtonLoader type="submit" isLoading={creatingStaffLoader}>
+          Create Staff
         </ButtonLoader>
       </form>
     </Form>
