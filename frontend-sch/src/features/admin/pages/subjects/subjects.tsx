@@ -27,10 +27,13 @@ export default function Subjects() {
         title="Subjects"
         description="Manage subjects"
         className="p-5"
-        buttonInfo={{
-          title: "Add Subject",
-          link: "/admin/subjects/create",
-        }}
+        buttons={[
+          {
+            title: "Create Subject",
+            link: "/admin/subjects/create",
+            variant: "default",
+          },
+        ]}
       />
       {/* Data table */}
       {isLoading ? (

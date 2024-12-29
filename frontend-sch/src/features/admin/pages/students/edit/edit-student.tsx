@@ -14,7 +14,13 @@ export default function EditStudents() {
       <Header
         title="Edit Student"
         description="Update/Modify contents for this student"
-        buttonInfo={{ title: "Go Back", link: "/admin/students" }}
+        buttons={[
+          {
+            title: "Go Back",
+            link: "/admin/students",
+            variant: "default",
+          },
+        ]}
       />
       {/* Form */}
       <div>

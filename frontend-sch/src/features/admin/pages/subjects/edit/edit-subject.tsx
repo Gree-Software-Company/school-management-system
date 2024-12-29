@@ -15,7 +15,13 @@ export default function EditSubject() {
       <Header
         title="Edit Subject"
         description="Update/Modify contents for this subject"
-        buttonInfo={{ title: "Go Back", link: "/admin/subjects" }}
+        buttons={[
+          {
+            title: "Go Back",
+            link: "/admin/subjects",
+            variant: "default",
+          },
+        ]}
       />
       {/* Form */}
       <div>

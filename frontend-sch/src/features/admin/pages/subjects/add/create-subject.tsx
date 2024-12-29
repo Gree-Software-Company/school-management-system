@@ -8,10 +8,13 @@ export default function CreateSubject() {
       <Header
         title="Create Subject"
         description="Register a subject"
-        buttonInfo={{
-          title: "Go Back",
-          link: "/admin/subjects",
-        }}
+        buttons={[
+          {
+            title: "Go Back",
+            link: "/admin/subjects",
+            variant: "default",
+          },
+        ]}
       />
       {/* Form */}
       <div>

@@ -26,10 +26,13 @@ export default function Classes() {
         title="Classes"
         description="Manage classes"
         className="p-5"
-        buttonInfo={{
-          title: "Create Class",
-          link: "/admin/class/create",
-        }}
+        buttons={[
+          {
+            title: "Create Class",
+            link: "/admin/class/create",
+            variant: "default",
+          },
+        ]}
       />
       {/* Data Table */}
       {isLoading ? (

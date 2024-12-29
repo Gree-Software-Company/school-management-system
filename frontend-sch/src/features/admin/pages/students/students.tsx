@@ -27,10 +27,13 @@ export default function Students() {
         title="Students"
         description="Manage students in this school"
         className="p-5"
-        buttonInfo={{
-          title: "Add Student",
-          link: "/admin/students/create",
-        }}
+        buttons={[
+          {
+            title: "Add Student",
+            link: "/admin/students/create",
+            variant: "default",
+          },
+        ]}
       />
       {/* Data table */}
       {isLoading ? (

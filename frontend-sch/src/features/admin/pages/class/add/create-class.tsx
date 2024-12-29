@@ -8,7 +8,13 @@ export default function CreateClass() {
       <Header
         title="Create Class"
         description="Register a class for the school"
-        buttonInfo={{ title: "Go Back", link: "/admin/class" }}
+        buttons={[
+          {
+            title: "Go Back",
+            link: "/admin/class",
+            variant: "default",
+          },
+        ]}
       />
       {/* Form */}
       <div className="">

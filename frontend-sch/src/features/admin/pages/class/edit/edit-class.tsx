@@ -14,7 +14,7 @@ export default function EditClass() {
       <Header
         title="Edit Class"
         description="Update/Modify contents for this class"
-        buttonInfo={{ title: "Go Back", link: "/admin/class" }}
+        buttons={[{ title: "Go Back", link: "/admin/class" }]}
       />
       {/* Form */}
       <div>
