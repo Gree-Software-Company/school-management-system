@@ -698,9 +698,9 @@ export async function updateNonTeachingStafProfileById(id: number, data: any) {
     const response = await prisma.profile.update({
       data: data,
       where: {
-        NoneTeachingStaff:{
-          id:id
-        }
+        NoneTeachingStaff: {
+          id: id,
+        },
       },
     });
     return response;
@@ -709,4 +709,31 @@ export async function updateNonTeachingStafProfileById(id: number, data: any) {
   }
 }
 
+export async function fetchGeneralAnalytics() {
+  try {
+    const [
+      totalStudents,
+      totalTeachingStaff,
+      totalNonTeachingStaff,
+      totalClasses,
+    ] = await Promise.all([
+      prisma.student.count(),
+      prisma.teachingStaff.count(),
+      prisma.noneTeachingStaff.count(),
+      prisma.class.count(),
+    ]);
 
+    const totalStaff = totalTeachingStaff + totalNonTeachingStaff;
+
+    return {
+      totalStudents,
+      totalStaff,
+      teachingStaff: totalTeachingStaff,
+      nonTeachingStaff: totalNonTeachingStaff,
+      totalClasses,
+    };
+  } catch (error) {
+    console.error("Error fetching general analytics:", error);
+    throw new Error("Could not fetch general analytics");
+  }
+}
