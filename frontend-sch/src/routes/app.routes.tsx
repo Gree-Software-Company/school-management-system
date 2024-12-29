@@ -222,7 +222,7 @@ const rootRoutes = createBrowserRouter(
               path=":id"
               lazy={async () => {
                 const { default: ViewStaff } = await import(
-                  "@/features/admin/pages/staff/view/view-staff"
+                  "@/features/admin/pages/staff/view/non-teaching/view-staff"
                 );
                 return { Component: ViewStaff };
               }}
@@ -250,10 +250,10 @@ const rootRoutes = createBrowserRouter(
             <Route
               path="teachers/:id"
               lazy={async () => {
-                const { default: ViewStaff } = await import(
-                  "@/features/admin/pages/staff/view/view-staff"
+                const { default: ViewTeacher } = await import(
+                  "@/features/admin/pages/staff/view/teaching/view-teacher"
                 );
-                return { Component: ViewStaff };
+                return { Component: ViewTeacher };
               }}
             />
             <Route
