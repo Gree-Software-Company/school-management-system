@@ -118,6 +118,18 @@ interface HeaderProps {
   buttons: ButtonInfo[];
 }
 
+// Loader props
+interface AnalyticsCardProps {
+  title: string;
+  value: number;
+  color: string;
+}
+
+interface StaffBreakdownProps {
+  teachingStaff: number;
+  nonTeachingStaff: number;
+}
+
 /**
  * @description User Types
  */
