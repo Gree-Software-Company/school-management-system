@@ -5,7 +5,7 @@
 import { useToast } from "@/hooks/use-toast";
 import { apiClient } from "@/services/axios-instance";
 import { useAuthStore } from "@/store/auth-store";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 
 /**
  * @Query Fetch general analytics
@@ -39,4 +39,13 @@ export const useFetchGeneralAnalytics = () => {
       },
     }
   );
+};
+
+/**
+ * @function invalidateAnalytics
+ */
+const queryClient = new QueryClient();
+
+export const invalidateAnalytics = () => {
+  queryClient.invalidateQueries(["analytics"]);
 };
