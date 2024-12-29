@@ -1,4 +1,10 @@
-import { BadgeCheck, ChevronsUpDown, LogOut } from "lucide-react";
+import {
+  BadgeCheck,
+  ChevronsUpDown,
+  CogIcon,
+  LogOut,
+  TvMinimal,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -74,8 +80,16 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
+                <CogIcon />
+                <Link to="/admin/settings">Settings</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
                 <BadgeCheck />
                 <Link to="/admin/settings/account">Account</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <TvMinimal />
+                <Link to="/admin/settings/appearance">Appearance</Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
