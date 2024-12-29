@@ -19,7 +19,7 @@ export default function Staff() {
     "staff/teachers",
     "teachers"
   );
-  const { mutateAsync: deleteStaff } = useDeleteResource("staffs", "staff");
+  const { mutateAsync: deleteStaff } = useDeleteResource("staff", "staffs");
 
   const handleDeleteTeacher = async (teacherId: number) => {
     try {

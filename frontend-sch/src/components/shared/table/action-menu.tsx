@@ -27,14 +27,20 @@ const ActionMenu = ({
   onDelete,
   hasEdit = true,
   hasDelete = true,
+  hasSubView = false,
+  hasSubEdit = false,
   hasView = true,
+  subEditText,
 }: {
   id?: string | number;
   resourceName: string;
   onDelete: (id: string | number) => void;
   hasEdit?: boolean;
   hasDelete?: boolean;
+  hasSubView?: boolean;
+  hasSubEdit?: boolean;
   hasView?: boolean;
+  subEditText?: string;
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -72,9 +78,21 @@ const ActionMenu = ({
             <Link to={`${id}`}>View {resourceName}</Link>
           </DropdownMenuItem>
         )}
+        {hasSubView && (
+          <DropdownMenuItem>
+            <Link to={`${resourceName}/${id}`}>View {resourceName}</Link>
+          </DropdownMenuItem>
+        )}
         {hasEdit && (
           <DropdownMenuItem>
             <Link to={`${id}/edit`} replace>
+              Edit {resourceName}
+            </Link>
+          </DropdownMenuItem>
+        )}
+        {hasSubEdit && (
+          <DropdownMenuItem>
+            <Link to={`${subEditText}/${id}/edit`} replace>
               Edit {resourceName}
             </Link>
           </DropdownMenuItem>

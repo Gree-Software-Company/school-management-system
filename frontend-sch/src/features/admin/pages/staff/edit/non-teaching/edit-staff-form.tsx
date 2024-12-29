@@ -11,15 +11,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useUpdateTeacher } from "@/features/admin/services/staff/queries";
+import { useUpdateStaff } from "@/features/admin/services/staff/queries";
 import { ButtonLoader } from "@/components/shared/loaders/button-loader";
 import { useEffect } from "react";
 
 const formSchema = z.object({
-  email: z.string().email(),
-  firstName: z.string().min(1, "First name required"),
-  lastName: z.string().min(1, "Last name is required"),
-  phoneNumber: z.string().optional(),
+  email: z.string().email().optional(),
+  role: z.string().optional(),
 });
 
 export default function EditStaffForm({
@@ -31,9 +29,7 @@ export default function EditStaffForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
+      role: "",
     },
   });
 
@@ -41,23 +37,19 @@ export default function EditStaffForm({
     if (staffData) {
       form.reset({
         email: staffData.email,
-        firstName: staffData.firstName,
-        lastName: staffData.lastName,
-        phoneNumber: staffData.phoneNumber || "",
+        role: staffData.role,
       });
     }
   }, [staffData, form]);
   const { mutateAsync: updateStaff, isLoading: updatingStaffLoader } =
-    useUpdateTeacher();
+    useUpdateStaff();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!staffData) return;
     const data = {
       id: staffData?.id,
       email: values.email,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      //   phoneNumber: values.phoneNumber,
+      role: values.role,
     };
     try {
       await updateStaff(data);
@@ -88,46 +80,14 @@ export default function EditStaffForm({
         />
         <FormField
           control={form.control}
-          name="firstName"
+          name="role"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel>Role</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="Enter first name" {...field} />
+                <Input placeholder="Enter role" type="text" {...field} />
               </FormControl>
-              <FormDescription>Enter staff first name</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input {...field} type="text" placeholder="Enter last name" />
-              </FormControl>
-              <FormDescription>Enter staff last name</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="phoneNumber"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone Number</FormLabel>
-              <FormControl>
-                <Input
-                  type="text"
-                  placeholder="Enter phone number"
-                  {...field}
-                />
-              </FormControl>
-              <FormDescription>Enter staff phone number</FormDescription>
+              <FormDescription>Update/Modify staff role</FormDescription>
               <FormMessage />
             </FormItem>
           )}

@@ -71,6 +71,9 @@ export const teachingColumns = ({
         <ActionMenu
           id={teacher.id}
           resourceName="teacher"
+          hasSubEdit={true}
+          hasEdit={false}
+          subEditText="teachers"
           onDelete={() => onDelete(teacher.id)}
         />
       );
