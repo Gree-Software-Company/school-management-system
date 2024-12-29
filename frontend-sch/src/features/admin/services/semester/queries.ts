@@ -6,6 +6,7 @@
 import { useToast } from "@/hooks/use-toast";
 import { apiClient } from "@/services/axios-instance";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { invalidateAnalytics } from "../analytics/queries";
 // import { useNavigate } from "react-router-dom";
 
 // Fetch all semesters
@@ -63,6 +64,8 @@ export const useCreateSemester = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["semesters"]);
+        invalidateAnalytics();
+
         toast({
           title: "Semester created",
           description: "Semester created successfully.",

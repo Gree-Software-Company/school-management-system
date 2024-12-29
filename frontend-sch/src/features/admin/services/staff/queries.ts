@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiClient } from "@/services/axios-instance";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { invalidateAnalytics } from "../analytics/queries";
 
 /**
  * @Query Fetch all teaching staff
@@ -245,6 +246,8 @@ export const useCreateStaff = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["staffs"]);
+        invalidateAnalytics();
+
         toast({
           title: "Staff created successfully",
           description: "Staff has been created successfully",

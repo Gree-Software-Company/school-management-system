@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "./axios-instance";
 import { useToast } from "@/hooks/use-toast";
+import { invalidateAnalytics } from "@/features/admin/services/analytics/queries";
 
 /**
  * Delete a resource and handle errors.
@@ -22,6 +23,7 @@ export const useDeleteResource = (resource: string, queryKey: string) => {
       onSuccess: () => {
         // Invalidate the query to refresh the table
         queryClient.invalidateQueries([queryKey]);
+        invalidateAnalytics();
         toast({
           title: "Deleted",
           description: `${resource} deleted successfully.`,

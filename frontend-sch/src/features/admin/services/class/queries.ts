@@ -2,6 +2,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiClient } from "@/services/axios-instance";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import { invalidateAnalytics } from "../analytics/queries";
 
 /**
  * @description Queries for class service
@@ -85,6 +86,7 @@ export const useCreateClass = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["classes"]);
+        invalidateAnalytics();
         toast({
           title: "Class created",
           description: "Class created successfully",
