@@ -9,6 +9,7 @@ import { subjectRouter } from "./routers/subject.router";
 import { classRouter } from "./routers/class.router";
 import { semesterRouter } from "./routers/semester.router";
 import { studnetRouter } from "./routers/student.router";
+import { errorMiddleware } from "./middleware/errormiddleware";
 
 dotenv.config();
 
@@ -27,7 +28,9 @@ app.use("/class", classRouter);
 app.use("/semesters", semesterRouter);
 app.use("/students", studnetRouter);
 
-const PORT = process.env.PORT || 3400;
+app.use(errorMiddleware);
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

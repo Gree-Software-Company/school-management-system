@@ -95,8 +95,6 @@ export async function createNewTeacherByEmail(
     const data = await prisma.teachingStaff.create({
       data: {
         email: email,
-        firstName: firstName,
-        lastName: lastName,
         profile: {
           create: {
             firstName: firstName,
@@ -626,3 +624,89 @@ export async function getAllFeesPaid() {
     throw new Error("could not not list all the fees");
   }
 }
+
+export async function createNewNonTeachingStaff(email: string, role: string) {
+  try {
+    const response = await prisma.noneTeachingStaff.create({
+      data: {
+        email: email,
+        role: role,
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.log("could not create staff");
+    throw new Error("could not create new staff");
+  }
+}
+
+export async function getNonTeachingStaffById(id: number) {
+  try {
+    const response = await prisma.noneTeachingStaff.findFirst({
+      where: {
+        id: id,
+      },
+      include: {
+        profile: true,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw new Error("could not get staff");
+  }
+}
+
+export async function updateNonTeachingStaffById(id: number, data: any) {
+  try {
+    const response = await prisma.noneTeachingStaff.update({
+      data: data,
+      where: {
+        id: id,
+      },
+    });
+    return response;
+  } catch (error) {
+    throw new Error("could not update non teaching stafff");
+  }
+}
+export async function deleleteNonTeachingStaffById(id: number) {
+  try {
+    const response = await prisma.noneTeachingStaff.delete({
+      where: {
+        id: id,
+      },
+    });
+    return response;
+  } catch (error) {
+    throw new Error("Could not delete non teaching staff data");
+  }
+}
+
+export async function getAllNonTeachingStaff() {
+  try {
+    const response = await prisma.noneTeachingStaff.findMany();
+    return response;
+  } catch (error) {
+    throw new Error("could not find all non teaching staff");
+  }
+}
+
+export async function updateNonTeachingStafProfileById(id: number, data: any) {
+  try {
+    const response = await prisma.profile.update({
+      data: data,
+      where: {
+        NoneTeachingStaff:{
+          id:id
+        }
+      },
+    });
+    return response;
+  } catch (error) {
+    throw new Error("could not update non teaching stafff");
+  }
+}
+
+
