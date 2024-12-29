@@ -1,11 +1,24 @@
 import {
+  createNewNonTeachingStaff,
   createNewTeacherByEmail,
+  deleleteNonTeachingStaffById,
   deleteUserById,
+  getAllNonTeachingStaff,
   getAllStaff,
+  getNonTeachingStaffById,
   getTeacherById,
+  updateNonTeachingStaffById,
+  updateNonTeachingStafProfileById,
   updateStaffBIO,
   updateTeacherById,
 } from "../../services/prisma.queries";
+import {
+  CreateException,
+  DeleteException,
+  GetDataException,
+  NotFoundException,
+  UpdateException,
+} from "../errors/error.handler";
 import { staffBioDataI } from "../interfaces/staff.interface";
 
 export class StaffController {
@@ -80,10 +93,12 @@ export class StaffController {
         .json({ message: "profile updated successfully", data: results })
         .status(201);
     } catch (err) {
-      res.json({
-        message: "there was an error updating staff bio",
-        details: err,
-      });
+      res
+        .json({
+          message: "there was an error updating staff bio",
+          details: err,
+        })
+        .status(500);
     }
   }
   static async deleteStaffById(req: any, res: any) {
@@ -92,8 +107,75 @@ export class StaffController {
       const data = await deleteUserById(id);
       return res.json({ message: "teacher deleted successfully", data: data });
     } catch (error) {
-      return res.json({ message: "could not delete the user", details: error });
+      return res
+        .json({ message: "could not delete the user", details: error })
+        .status(500);
     }
   }
-  static async getStaffTeacherClass(req: Request, res: Response) {}
+
+  static async addNewNonTeachinStaff(req, res, next) {
+    const { email, role } = req.body;
+
+    try {
+      const data = await createNewNonTeachingStaff(email, role);
+      return res.json({ message: "staff created sucessfully", detils: data });
+    } catch (err) {
+      return next(new CreateException());
+    }
+  }
+
+  static async updateNonTeachingStaff(req, res, next) {
+    const id = parseInt(req.params.id);
+    const { email, role } = req.body;
+    try {
+      const data = await updateNonTeachingStaffById(id, { email, role });
+
+      return res.json({ message: "staff updated successfully", detils: data });
+    } catch (err) {
+      return next(new UpdateException());
+    }
+  }
+
+  static async deleteNonTeachingStaff(req, res, next) {
+    const id = parseInt(req.params.id);
+    try {
+      const data = await deleleteNonTeachingStaffById(id);
+      return res.json({ message: "staff deleted successfully", detils: data });
+    } catch (err) {
+      return next(new DeleteException());
+    }
+  }
+
+  static async getAllNonTeachingStaff(req, res, next) {
+    try {
+      const data = await getAllNonTeachingStaff();
+      return res.json({ data: data });
+    } catch (err) {
+      return next(new GetDataException());
+    }
+  }
+
+  static async getNonTeachingStaffById(req, res, next) {
+    const id = parseInt(req.params.id);
+    try {
+      const data = await getNonTeachingStaffById(id);
+      return res.json({ data: data });
+    } catch (err) {
+      return next(new GetDataException());
+    }
+  }
+
+  static async updateNonTeachingStaffProfile(req, res, next) {
+    const id = parseInt(req.params.id);
+
+    try {
+      const data = await updateNonTeachingStafProfileById(id, req.body);
+      return res.json({
+        message: "profile updated succesfully",
+        details: data,
+      });
+    } catch (error) {
+      return next(new UpdateException());
+    }
+  }
 }
