@@ -1,4 +1,4 @@
-import { Bot, Settings2, SquareTerminal } from "lucide-react";
+import { Bot, GraduationCap, Settings2, SquareTerminal } from "lucide-react";
 
 export const data = {
   navMain: [
@@ -22,6 +22,7 @@ export const data = {
         // },
       ],
     },
+    // Administration
     {
       title: "Administration",
       url: "#",
@@ -40,15 +41,36 @@ export const data = {
           url: "/admin/students",
         },
         {
-          title: "Subjects",
-          url: "/admin/subjects",
-        },
-        {
           title: "Class",
           url: "/admin/class",
         },
       ],
     },
+    // Academics
+    {
+      title: "Academics",
+      url: "#",
+      icon: GraduationCap,
+      items: [
+        {
+          title: "Subjects",
+          url: "/admin/subjects",
+        },
+        {
+          title: "Exams",
+          url: "/admin/exams",
+        },
+        {
+          title: "Results",
+          url: "/admin/results",
+        },
+        {
+          title: "Attendance",
+          url: "/admin/attendance",
+        },
+      ],
+    },
+    // Settings
     {
       title: "Settings",
       url: "#",
