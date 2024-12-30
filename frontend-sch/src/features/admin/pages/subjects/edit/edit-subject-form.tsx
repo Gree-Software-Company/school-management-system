@@ -49,7 +49,13 @@ export default function EditSubjectForm({
       name: values.name,
     };
     try {
-      await updateSubject(data);
+      await updateSubject({
+        id: data.id,
+        data: {
+          id: parseInt(data.id),
+          name: data.name,
+        },
+      });
     } catch (error) {
       console.error("Form submission error", error);
     }
