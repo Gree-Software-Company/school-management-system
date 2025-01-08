@@ -24,6 +24,7 @@ model TeachingStaff {
   profileId Int?      @unique
   classes   Class[]   @relation("TeachingStaffClasses")
   subjects  Subject[]
+  attendance   Attendace[]
 }
 
 model Subject {
@@ -62,6 +63,7 @@ model Student {
   profile    StudentProfile?
   dateJoined DateTime        @default(now())
   fees   Fees[]
+  attendance   Attendace[]
 }
 
 model StudentProfile {
@@ -114,4 +116,13 @@ model Semester {
   academicYear String
   marks   Marks[]
   fees    Fees[]
+}
+
+model Attendace {
+  id        Int      @id @default(autoincrement())
+  signed_on DateTime @default(now())
+  studentId Int?
+  staffId   Int?
+  student   Student? @relation(fields: [studentId], references: [id])
+  staff     TeachingStaff? @relation(fields: [staffId], references: [id])
 }

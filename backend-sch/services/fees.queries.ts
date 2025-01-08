@@ -75,6 +75,7 @@ export async function updateFees(id: number, fees: feesData) {
     const resp = await prisma.fees.update({
       where: {
         id: id,
+       
       },
       data: fees,
     });
