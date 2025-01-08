@@ -4,6 +4,7 @@ const prisma = new PrismaClient();
 
 async function main() {
   // Seed Users
+ 
 
 }
 main()
@@ -14,3 +15,4 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+

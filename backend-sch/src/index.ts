@@ -10,6 +10,8 @@ import { classRouter } from "./routers/class.router";
 import { semesterRouter } from "./routers/semester.router";
 import { studnetRouter } from "./routers/student.router";
 import { errorMiddleware } from "./middleware/errormiddleware";
+import { resultsRouter } from "./routers/results.router";
+import { feesRouter } from "./routers/fees.router";
 
 dotenv.config();
 
@@ -27,6 +29,8 @@ app.use("/subjects", subjectRouter);
 app.use("/class", classRouter);
 app.use("/semesters", semesterRouter);
 app.use("/students", studnetRouter);
+app.use("/fees", feesRouter);
+app.use("/grades", resultsRouter);
 
 app.use(errorMiddleware);
 

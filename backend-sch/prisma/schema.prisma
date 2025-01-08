@@ -104,8 +104,8 @@ model Fees {
   amount        Float
   studentId     Int
   semesterId    Int
-  student       Student @relation(fields: [studentId], references: [id])
-  semester      Semester @relation(fields: [semesterId], references: [id])
+  student       Student? @relation(fields: [studentId], references: [id])
+  semester      Semester? @relation(fields: [semesterId], references: [id])
 }
 
 model Semester {

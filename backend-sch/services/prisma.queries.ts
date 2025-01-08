@@ -447,41 +447,6 @@ export async function updateStudentById(id: number, studentData: any) {
   }
 }
 
-export async function addNewFees(
-  studentId: number,
-  amount: number,
-  semesterId: number
-) {
-  try {
-    const resp = await prisma.fees.create({
-      data: {
-        amount: amount,
-        studentId: studentId,
-        semesterId: semesterId,
-      },
-    });
-    return resp;
-  } catch (err) {
-    console.log(err);
-    throw new Error("could not create new fees");
-  }
-}
-
-export async function updateFeeById(id: number, feeData: any) {
-  try {
-    const data = await prisma.fees.update({
-      where: {
-        id: id,
-      },
-      data: feeData,
-    });
-    return data;
-  } catch (error) {
-    console.log(error);
-    throw new Error("could not update user fees");
-  }
-}
-
 export async function getStudentById(id: number) {
   try {
     const data = await prisma.student.findFirst({

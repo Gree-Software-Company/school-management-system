@@ -71,7 +71,9 @@ export class SemesterController {
       const data = await findAllSemestersPresent();
       res.json({ semesters: data });
     } catch (err) {
-      res.json({ message: "could not fetch all semsesters", details: err });
+      res
+        .json({ message: "could not fetch all semsesters", details: err })
+        .status(500);
     }
   }
 }
